@@ -4,12 +4,14 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd
 
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
-  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath*:mybatis/mappers/*Mapper.xml
-
+  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 server:
   port: 8088
   servlet:
