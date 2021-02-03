@@ -34,4 +34,18 @@ public class ClassRoomService {
         return resultUtil;
     }
 
+    public ResultUtil buySeatSercice(String seatNumber,String room_name){
+        ResultUtil resultUtil = new ResultUtil();
+        classRoomMapper.buySeatMapper(seatNumber,room_name);
+        resultUtil.setSetMessage("修改作为状态成功");
+        System.out.println("修改状态成功");
+        resultUtil.setCode(200);
+        return resultUtil;
+    }
+
+//    后台管理员界面相关的接口
+    public ResultUtil newRoom(ClassRoom room){
+        classRoomMapper.insert(room);
+        return null;
+    }
 }
