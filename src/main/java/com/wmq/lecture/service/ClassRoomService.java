@@ -17,7 +17,6 @@ import javax.annotation.Resource;
 public class ClassRoomService {
    @Resource
     ClassRoomMapper classRoomMapper;
-
     public ResultUtil getClassRoomInfo(){
         ResultUtil resultUtil = new ResultUtil();
         resultUtil.setCode(200);

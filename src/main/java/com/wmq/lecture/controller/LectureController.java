@@ -12,18 +12,18 @@ import javax.annotation.Resource;
  * @author lenovo
  */
 @RestController
-@RequestMapping("/back")
+
 public class LectureController {
 
     @Resource
     LectureService lectureService;
 
-    @GetMapping("lectureInfo")
+    @GetMapping("student/lectureInfo")
     public ResultUtil getInitTableInfo(){
             return lectureService.getInitTableInfo();
     }
 
-    @PostMapping("createNewLecture")
+    @PostMapping("admin/createNewLecture")
     public ResultUtil createNewLecture(@RequestBody Lecture lecture){
         return lectureService.createNewLecture(lecture);
     }

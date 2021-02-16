@@ -14,15 +14,14 @@ import javax.annotation.Resource;
  * @author lenovo
  */
 @RestController
-@RequestMapping("/home")
+@RequestMapping("/student")
 public class FirstPageController {
     @Resource
     FirstPageService firstPageService;
-    @GetMapping("first")
+    @GetMapping("home")
     public ResultUtil getAll(){
         return firstPageService.getAll();
     }
-
     @GetMapping("getSeatInfo")
     public ResultUtil getSeatInfo(@RequestParam(value="roomName")String roomName){
         return firstPageService.getSeatInfo(roomName);

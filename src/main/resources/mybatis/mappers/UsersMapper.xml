@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wmq.lecture.mapper.UsersMapper">
+  <resultMap id="BaseResultMap" type="com.wmq.lecture.entity.Users">
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="integrity" jdbcType="INTEGER" property="integrity" />
+    <result column="role" jdbcType="VARCHAR" property="role" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+  </resultMap>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select uid,name,integrity,role,score,status from users
+  </select>
+
+  <select id="selectUserByUid" resultMap="BaseResultMap">
+    select * from users where uid = #{uid};
+  </select>
+
+  <select id="selectRoleByUid" resultType="java.lang.String">
+    select role from users where uid = #{uid,jdbcType=VARCHAR}
+  </select>
+
+</mapper>

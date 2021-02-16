@@ -12,11 +12,7 @@
         <sqlMapGenerator targetPackage="mybatis.mappers" targetProject="src/main/resources"/>
 <!--        mapper.java生成的文件及存储的位置-->
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.wmq.lecture.mapper" targetProject="src/main/java"/>
-<!--        <table tableName="log" />-->
-<!--            <table tableName="administrator"/>-->
-<!--            <table tableName="book_lecture" />-->
-<!--            <table tableName="lecture" />-->
-            <table tableName="class_room" />
-<!--            <table tableName="student" />-->
+
+            <table tableName="users" />
     </context>
 </generatorConfiguration>
