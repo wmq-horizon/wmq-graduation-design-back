@@ -11,7 +11,9 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 
@@ -20,7 +22,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @CrossOrigin(origins="*",maxAge=3600)
-public class UserController {
+public class UserController<UploadExcelFileService> {
     @Resource
     UserService userService;
     @RequestMapping("/user/login")
@@ -94,10 +96,55 @@ public class UserController {
     }
     @RequestMapping("/admin/users")
     public ResultUtil selectUsers(){
+        return  userService.selectAllUsers();
+    }
+/**
+ * 上传文件用的Controller
+ *
+ * */
+//@RequestParam(value = "excelFile")
+@PostMapping("/upload/excelFile")
+    @ResponseBody
+    public ResultUtil uploadExcel(MultipartFile file) {
         ResultUtil resultUtil = new ResultUtil();
-        resultUtil.setCode(200);
-        resultUtil.setSetMessage("查询所有用户信息");
-        resultUtil.setData(userService.selectAllUsers());
+        try {
+            if (file == null) {
+                // 文件不能为空
+                resultUtil.setCode(310);
+                resultUtil.setSetMessage("文件不能为空");
+                return resultUtil;
+            }
+
+            String fileName = file.getOriginalFilename();
+            System.out.println(fileName);
+            if (!fileName.matches("^.+\\.(?i)(xls)$") && !fileName.matches("^.+\\.(?i)(xlsx)$")) {
+                // 文件格式不正确
+                resultUtil.setCode(311);
+                resultUtil.setSetMessage("文件格式不对");
+                return resultUtil;
+            }
+
+            long size = file.getSize();
+            if (size == 0) {
+                // 文件不能为空
+               resultUtil.setCode(312);
+               resultUtil.setSetMessage("文件不能为空");
+               return resultUtil;
+            }
+
+            resultUtil = userService.uploadExcel(fileName, file);
+
+            if (resultUtil.getSetMessage().equals("success")) {
+                //保存成功
+                resultUtil.setCode(200);
+                resultUtil.setSetMessage("上传文件成功");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultUtil.setCode(313);
+            resultUtil.setSetMessage("上传文件失败");
+        }
+
         return resultUtil;
     }
 }

@@ -14,4 +14,5 @@ public interface UsersMapper {
     int updateByPrimaryKey(Users record);
     Users selectUserByUid(String uid);
     String selectRoleByUid(String uid);
+    int insertExcelData(List<Users> item);
 }

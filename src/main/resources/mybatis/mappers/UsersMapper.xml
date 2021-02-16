@@ -22,4 +22,20 @@
     select role from users where uid = #{uid,jdbcType=VARCHAR}
   </select>
 
+  <!-- 将excel数据批量插入数据库 -->
+  <insert id="insertExcelData" parameterType="java.util.List">
+    INSERT INTO users (uid,name,password,integrity,role,score,status)
+    VALUES
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.uid},
+      #{item.name},
+      #{item.password},
+      #{item.integrity},
+      #{item.role},
+      #{item.score},
+      #{item.status}
+      )
+    </foreach>
+  </insert>
 </mapper>
