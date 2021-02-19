@@ -1,6 +1,7 @@
 package com.wmq.lecture.controller;
 
 import com.wmq.lecture.entity.ClassRoom;
+import com.wmq.lecture.entity.Lecture;
 import com.wmq.lecture.service.ClassRoomService;
 import com.wmq.lecture.utils.ResultUtil;
 import org.springframework.web.bind.annotation.*;
@@ -23,22 +24,18 @@ public class ClassRoomController {
         return classRoomService.postClassRoomInfo(classRoom);
     }
 
-    @GetMapping("student/buySeat")
-    public ResultUtil buySeat(@RequestParam(value="seatNumberAndName")String seatNumberAndName){
-        String[] strs = new String[2];
-        int index = 0;
-        for(String str:seatNumberAndName.split("=")){
-            strs[index] = str;
-            index++;
-        }
+    @PostMapping("student/buySeat")
+    public ResultUtil buySeat(@RequestBody  Lecture lecture){
+        System.out.println(lecture);
         ResultUtil resultUtil = new ResultUtil();
-        String seatNumber = strs[0];
-        String room_name = "'"+strs[1]+"'";
-        System.out.println(seatNumber);
-        System.out.println(room_name);
+        String seatNumber = "seat_"+lecture.getContent();
+        String room_name = "'"+lecture.getLecRoom()+"'";
         classRoomService.buySeatSercice(seatNumber,room_name);
+        classRoomService.bookLecture(lecture);
         return resultUtil;
     }
+
+
     @PostMapping("admin/newRoom")
     public ResultUtil newRoom(@RequestBody ClassRoom room){
         return classRoomService.newRoom(room);

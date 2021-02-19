@@ -9,7 +9,5 @@ import java.util.List;
 public interface ClassRoomMapper {
     int insert(ClassRoom record);
     List<ClassRoom> selectAll();
-
-    List<ClassRoom> getSeatInfo(String classRoom);
-    void buySeatMapper(@Param("seatNumber")String seatNumber,@Param("room_name") String room_name);
+    ClassRoom selectRoomByRoomName(String roomName);
 }

@@ -31,8 +31,9 @@ public class UserController<UploadExcelFileService> {
         String uid = user.getUid();
         String password = user.getPassword();
         String role = userService.getRoleByUid(uid);
+        System.out.println("role:"+role);
         ResultUtil resultUtil = new ResultUtil();
-        if(!role.equals(user.getRole())){
+        if(role==null||!role.equals(user.getRole())){
             resultUtil.setCode(243);
             resultUtil.setSetMessage("角色不匹配");
             return resultUtil;

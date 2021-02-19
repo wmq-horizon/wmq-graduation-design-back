@@ -13,6 +13,6 @@
 <!--        mapper.java生成的文件及存储的位置-->
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.wmq.lecture.mapper" targetProject="src/main/java"/>
 
-            <table tableName="users" />
+            <table tableName="lecture_room" />
     </context>
 </generatorConfiguration>

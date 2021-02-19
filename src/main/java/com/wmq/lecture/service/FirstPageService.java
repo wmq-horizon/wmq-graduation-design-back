@@ -2,6 +2,7 @@ package com.wmq.lecture.service;
 
 import com.wmq.lecture.mapper.ClassRoomMapper;
 import com.wmq.lecture.mapper.LectureMapper;
+import com.wmq.lecture.mapper.LectureRoomMapper;
 import com.wmq.lecture.utils.ResultUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,8 @@ import javax.annotation.Resource;
  */
 @Service
 public class FirstPageService {
+    @Resource
+    LectureRoomMapper lectureRoomMapper;
     @Resource
     LectureMapper lectureMapper;
     public ResultUtil getAll(){
@@ -31,11 +34,12 @@ public class FirstPageService {
         }
 
     }
-    @Resource
-    ClassRoomMapper classRoomMapper ;
-    public ResultUtil getSeatInfo(String roomName){
+    /**
+    * 返回指定讲座编号和宣讲室名称的座位信息
+    * */
+    public ResultUtil getSeatInfo(String roomName,String lecNumber){
         ResultUtil resultUtil = new ResultUtil();
-        resultUtil.setData(classRoomMapper.getSeatInfo(roomName));
+        resultUtil.setData(lectureRoomMapper.getSeatInfo(roomName,lecNumber));
         if(resultUtil.getData()!=null){
             resultUtil.setCode(200);
             resultUtil.setSetMessage("查询所有的讲座信息");

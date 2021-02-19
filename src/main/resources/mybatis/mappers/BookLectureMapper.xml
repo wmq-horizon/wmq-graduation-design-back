@@ -5,22 +5,22 @@
     <result column="stu_number" jdbcType="VARCHAR" property="stuNumber" />
     <result column="room_number" jdbcType="VARCHAR" property="roomNumber" />
     <result column="lec_number" jdbcType="VARCHAR" property="lecNumber" />
-    <result column="row" jdbcType="INTEGER" property="row" />
+    <result column="rrow" jdbcType="INTEGER" property="rrow" />
     <result column="collumn" jdbcType="INTEGER" property="collumn" />
-    <result column="time" jdbcType="TIME" property="time" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
     <result column="date" jdbcType="DATE" property="date" />
     <result column="score" jdbcType="DOUBLE" property="score" />
   </resultMap>
   <insert id="insert" parameterType="com.wmq.lecture.entity.BookLecture">
-    insert into book_lecture (stu_number, room_number, lec_number, 
-      row, collumn, time, date, 
-      score)
+    insert into book_lecture (stu_number, room_number, lec_number, rrow, collumn, time, date,score)
     values (#{stuNumber,jdbcType=VARCHAR}, #{roomNumber,jdbcType=VARCHAR}, #{lecNumber,jdbcType=VARCHAR}, 
-      #{row,jdbcType=INTEGER}, #{collumn,jdbcType=INTEGER}, #{time,jdbcType=TIME}, #{date,jdbcType=DATE}, 
+      #{rrow,jdbcType=INTEGER}, #{collumn,jdbcType=INTEGER}, #{time,jdbcType=VARCHAR}, #{date,jdbcType=DATE},
       #{score,jdbcType=DOUBLE})
   </insert>
+
+
   <select id="selectAll" resultMap="BaseResultMap">
-    select stu_number, room_number, lec_number, row, collumn, time, date, score
+    select stu_number, room_number, lec_number, rrow, collumn, time, date, score
     from book_lecture
   </select>
 </mapper>

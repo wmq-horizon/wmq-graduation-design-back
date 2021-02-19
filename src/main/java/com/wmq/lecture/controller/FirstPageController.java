@@ -23,7 +23,9 @@ public class FirstPageController {
         return firstPageService.getAll();
     }
     @GetMapping("getSeatInfo")
-    public ResultUtil getSeatInfo(@RequestParam(value="roomName")String roomName){
-        return firstPageService.getSeatInfo(roomName);
+    public ResultUtil getSeatInfo(@RequestParam(value="roomName")String roomName,@RequestParam(value="lecNumber")String lecNumber){
+        System.out.println("roomName:"+roomName);
+        System.out.println("lecNumber:"+lecNumber);
+        return firstPageService.getSeatInfo(roomName,lecNumber);
     }
 }
