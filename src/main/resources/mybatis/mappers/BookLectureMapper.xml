@@ -23,4 +23,25 @@
     select stu_number, room_number, lec_number, rrow, collumn, time, date, score
     from book_lecture
   </select>
+
+  <select id="topLecture" resultType="com.wmq.lecture.entity.resulttype.TopLecture">
+      select lecture.title,book_lecture.lec_number , count(book_lecture.lec_number) totalLecture
+        from book_lecture,lecture where lecture.lec_number=book_lecture.lec_number group by
+        book_lecture.lec_number,lecture.title
+        order by totalLecture desc limit 10
+  </select>
+
+  <select id="topStudent" resultType="com.wmq.lecture.entity.resulttype.topStudent">
+    select name,stu_number,count(stu_number)stuCount
+    from book_lecture,users where stu_number = uid group by stu_number,name
+    order by stuCount desc limit 10
+  </select>
+
+  <select id="topSpeaker" resultType="com.wmq.lecture.entity.resulttype.TopSpeaker">
+    select speaker,book_lecture.lec_number , count(book_lecture.lec_number) totalLecture
+    from book_lecture,lecture where lecture.lec_number=book_lecture.lec_number
+    group by book_lecture.lec_number,speaker
+    order by totalLecture desc
+  </select>
+
 </mapper>

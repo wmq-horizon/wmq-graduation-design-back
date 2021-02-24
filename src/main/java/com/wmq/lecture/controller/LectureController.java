@@ -17,7 +17,6 @@ public class LectureController {
 
     @Resource
     LectureService lectureService;
-
     @GetMapping("student/lectureInfo")
     public ResultUtil getInitTableInfo(){
             return lectureService.getInitTableInfo();
@@ -27,4 +26,17 @@ public class LectureController {
     public ResultUtil createNewLecture(@RequestBody Lecture lecture){
         return lectureService.createNewLecture(lecture);
     }
+    @RequestMapping("student/getTopLecture")
+    public ResultUtil getTopLecture(){
+         return lectureService.getTopLectureInfo();
+    };
+    @RequestMapping("student/getTopStudent")
+    public ResultUtil getTopStudent(){
+        return lectureService.getTopStudent();
+    }
+    @RequestMapping("student/getTopThreeSpeaker")
+    public ResultUtil getTopSpeaker(){
+        return lectureService.getTopSpeaker();
+    }
+
 }

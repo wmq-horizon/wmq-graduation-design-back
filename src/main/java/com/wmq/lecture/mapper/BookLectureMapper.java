@@ -22,4 +22,9 @@ public interface BookLectureMapper {
      * @mbg.generated Tue Jan 12 17:56:06 CST 2021
      */
     List<BookLecture> selectAll();
+
+    List topLecture();
+    List topStudent();
+    List topSpeaker();
+
 }

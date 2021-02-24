@@ -286,4 +286,8 @@
   <update id="buySeatMapper" statementType="STATEMENT">
     update lecture_room set ${seatNumber} = '2' where room_number = ${room_name}
   </update>
+  <select id="topRoom" resultType="com.wmq.lecture.entity.resulttype.TopRoom" >
+    select room_number,count(*)roomCount from lecture_room
+    group by room_number order by roomCount desc limit 2
+  </select>
 </mapper>

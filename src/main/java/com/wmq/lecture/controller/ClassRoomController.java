@@ -2,7 +2,9 @@ package com.wmq.lecture.controller;
 
 import com.wmq.lecture.entity.ClassRoom;
 import com.wmq.lecture.entity.Lecture;
+import com.wmq.lecture.entity.LectureRoom;
 import com.wmq.lecture.service.ClassRoomService;
+import com.wmq.lecture.service.LectureService;
 import com.wmq.lecture.utils.ResultUtil;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,10 +36,13 @@ public class ClassRoomController {
         classRoomService.bookLecture(lecture);
         return resultUtil;
     }
-
-
     @PostMapping("admin/newRoom")
     public ResultUtil newRoom(@RequestBody ClassRoom room){
         return classRoomService.newRoom(room);
+    }
+
+    @GetMapping("/student/topRoom")
+    public ResultUtil topRoom(){
+        return classRoomService.getTopRoom();
     }
 }

@@ -1,8 +1,10 @@
 package com.wmq.lecture.service;
 
+import com.wmq.lecture.entity.BookLecture;
 import com.wmq.lecture.entity.ClassRoom;
 import com.wmq.lecture.entity.Lecture;
 import com.wmq.lecture.entity.LectureRoom;
+import com.wmq.lecture.mapper.BookLectureMapper;
 import com.wmq.lecture.mapper.ClassRoomMapper;
 import com.wmq.lecture.mapper.LectureMapper;
 import com.wmq.lecture.mapper.LectureRoomMapper;
@@ -23,6 +25,9 @@ public class LectureService {
     LectureRoomMapper lectureRoomMapper;
     @Resource
     ClassRoomMapper classRoomMapper;
+    @Resource
+    BookLectureMapper bookLectureMapper;
+
     public ResultUtil getInitTableInfo(){
         ResultUtil resultUtil = new ResultUtil();
         resultUtil.setSetMessage("返回讲座信息");
@@ -59,5 +64,28 @@ public class LectureService {
         return resultUtil;
     }
 
+    public ResultUtil getTopLectureInfo(){
+        ResultUtil resultUtil = new ResultUtil();
+
+        resultUtil.setSetMessage("获取前讲座排名10的数据");
+        resultUtil.setData(bookLectureMapper.topLecture());
+        resultUtil.setCode(200);
+        return resultUtil;
+    }
+
+    public ResultUtil getTopStudent(){
+        ResultUtil resultUtil = new ResultUtil();
+        resultUtil.setSetMessage("获取预约讲座次数最多的10人");
+        resultUtil.setCode(200);
+        resultUtil.setData(bookLectureMapper.topStudent());
+        return resultUtil;
+    }
+    public ResultUtil getTopSpeaker(){
+        ResultUtil resultUtil = new ResultUtil();
+        resultUtil.setCode(200);
+        resultUtil.setSetMessage("获取最受欢迎的前10名讲师");
+        resultUtil.setData(bookLectureMapper.topSpeaker());
+        return resultUtil;
+    }
 
 }

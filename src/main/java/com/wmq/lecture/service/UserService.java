@@ -39,9 +39,6 @@ public class UserService {
         resultUtil.setData(usersMapper.selectAll());
         return resultUtil;
     }
-
-
-
     public ResultUtil uploadExcel(String fileName,MultipartFile file) {
         ResultUtil result = new ResultUtil();
         try {
@@ -138,6 +135,21 @@ public class UserService {
             return result;
 //            throw new Exception(e.getMessage());
         }
+    }
+
+    public ResultUtil topScoreUser(){
+        ResultUtil resultUtil = new ResultUtil();
+        resultUtil.setData(usersMapper.topScoreUser());
+        resultUtil.setSetMessage("获取成绩排名前10的学生");
+        resultUtil.setCode(200);
+        return resultUtil;
+    }
+    public ResultUtil topIntegrityUser(){
+        ResultUtil resultUtil = new ResultUtil();
+        resultUtil.setData(usersMapper.topIntegrityUser());
+        resultUtil.setSetMessage("获取诚信值排名前10的学生");
+        resultUtil.setCode(200);
+        return resultUtil;
     }
 }
 

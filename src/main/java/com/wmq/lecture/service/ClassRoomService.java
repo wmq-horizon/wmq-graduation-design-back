@@ -106,4 +106,11 @@ public class ClassRoomService {
 //    public ClassRoom selectClassRoomByRoomName(String roomName){
 //        return classRoomMapper.selectRoomByRoomName(roomName);
 //    }
+    public ResultUtil getTopRoom(){
+        ResultUtil resultUtil = new ResultUtil();
+        resultUtil.setData(lectureRoomMapper.topRoom());
+        resultUtil.setSetMessage("查询使用最多的两个宣讲室");
+        resultUtil.setCode(200);
+        return resultUtil;
+    }
 }

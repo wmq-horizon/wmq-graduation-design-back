@@ -15,4 +15,6 @@ public interface UsersMapper {
     Users selectUserByUid(String uid);
     String selectRoleByUid(String uid);
     int insertExcelData(List<Users> item);
+    List topScoreUser();
+    List topIntegrityUser();
 }

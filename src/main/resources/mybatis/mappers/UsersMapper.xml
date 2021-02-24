@@ -38,4 +38,10 @@
       )
     </foreach>
   </insert>
+  <select id="topScoreUser" resultMap="BaseResultMap">
+    select uid,name,score from users order by score desc limit 10
+  </select>
+  <select id="topIntegrityUser" resultMap="BaseResultMap">
+    select uid,name,integrity from users order by integrity desc limit 10
+  </select>
 </mapper>

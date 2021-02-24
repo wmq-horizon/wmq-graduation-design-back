@@ -89,10 +89,11 @@ public class UserController<UploadExcelFileService> {
     @RequestMapping("/student/hello")
     public ResultUtil showWhoIAm(){
         ResultUtil resultUtil = new ResultUtil();
+        Subject currentUser = SecurityUtils.getSubject();
+        String uid = (String)currentUser.getPrincipal();
         resultUtil.setCode(401);
         resultUtil.setSetMessage("现在登录的是");
-        Subject currentUser = SecurityUtils.getSubject();
-        System.out.println(currentUser);
+        resultUtil.setData(userService.getUserByUid(uid));
         return resultUtil;
     }
     @RequestMapping("/admin/users")
@@ -102,9 +103,9 @@ public class UserController<UploadExcelFileService> {
 /**
  * 上传文件用的Controller
  *
- * */
-//@RequestParam(value = "excelFile")
-@PostMapping("/upload/excelFile")
+ */
+
+    @PostMapping("/upload/excelFile")
     @ResponseBody
     public ResultUtil uploadExcel(MultipartFile file) {
         ResultUtil resultUtil = new ResultUtil();
@@ -148,4 +149,14 @@ public class UserController<UploadExcelFileService> {
 
         return resultUtil;
     }
+
+    @RequestMapping("/student/topScoreUser")
+    public ResultUtil getTopScoreStudent(){
+        return userService.topScoreUser();
+    }
+    @RequestMapping("/student/topIntegrityUser")
+    public ResultUtil getTopIntegrityStudent(){
+        return userService.topIntegrityUser();
+    }
+
 }
