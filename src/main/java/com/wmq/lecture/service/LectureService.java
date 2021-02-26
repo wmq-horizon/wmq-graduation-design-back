@@ -87,5 +87,30 @@ public class LectureService {
         resultUtil.setData(bookLectureMapper.topSpeaker());
         return resultUtil;
     }
+    public ResultUtil deleteLecture(String lecNumber){
+        ResultUtil resultUtil = new ResultUtil();
+        if(lecNumber==null){
+            resultUtil.setSetMessage("待删除的讲座不存在");
+            resultUtil.setCode(401);
+        }else{
+            lectureMapper.deleteLecture(lecNumber);
+            resultUtil.setSetMessage("成功删除讲座");
+            resultUtil.setCode(200);
+        }
+        return resultUtil;
+    }
+    public ResultUtil updateLecture(Lecture lecture){
+        ResultUtil resultUtil = new ResultUtil();
+        if (lecture==null || lecture.getLecNumber()==null){
+            resultUtil.setSetMessage("待更新的讲座为空");
+            resultUtil.setCode(401);
+        }else{
+            resultUtil.setSetMessage("更新讲座");
+            int status = lectureMapper.updateLecture(lecture);
+            System.out.println(status);
+            resultUtil.setCode(200);
+        }
+        return resultUtil;
+    }
 
 }

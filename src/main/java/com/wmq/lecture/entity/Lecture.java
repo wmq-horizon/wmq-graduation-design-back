@@ -15,10 +15,10 @@ public class Lecture {
     private String speaker;
     private Double lecScore;
     private Date lecDate;
-
     private String lecTime;
     private String introduction;
     private String content;
+
     public String getLecNumber() {
         return lecNumber;
     }

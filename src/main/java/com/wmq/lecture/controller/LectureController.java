@@ -3,6 +3,7 @@ package com.wmq.lecture.controller;
 import com.wmq.lecture.entity.Lecture;
 import com.wmq.lecture.service.LectureService;
 import com.wmq.lecture.utils.ResultUtil;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,5 +39,15 @@ public class LectureController {
     public ResultUtil getTopSpeaker(){
         return lectureService.getTopSpeaker();
     }
-
+    @RequestMapping("/admin/deleteLecture")
+    public ResultUtil deleteLecture(@Param("lecNumber")String lecNumber){
+        return lectureService.deleteLecture(lecNumber);
+    }
+    @RequestMapping("admin/updateLecture")
+    @ResponseBody
+    public ResultUtil updateLecture(@RequestBody Lecture lecture){
+        System.out.println("更新讲座信息");
+        System.out.println(lecture);
+        return lectureService.updateLecture(lecture);
+    }
 }

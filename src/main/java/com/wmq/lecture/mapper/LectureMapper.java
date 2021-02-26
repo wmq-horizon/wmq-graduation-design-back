@@ -18,4 +18,8 @@ public interface LectureMapper {
      * @mbg.generated Tue Jan 12 17:56:06 CST 2021
      */
     List<Lecture> selectAll();
+
+    void deleteLecture(String lecNumber);
+
+    int updateLecture(Lecture lecture);
 }

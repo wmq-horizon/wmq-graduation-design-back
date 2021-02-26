@@ -37,4 +37,12 @@
     content
     from lecture
   </select>
+    <delete id="deleteLecture">
+        delete from lecture where lec_number = #{lecNumber};
+    </delete>
+    <update id="updateLecture" parameterType="com.wmq.lecture.entity.Lecture">
+        update lecture set lec_number = #{lecNumber},lec_room = #{lecRoom},title = #{title}
+        speaker = #{speaker},introduction = #{introduction},lec_score = #{lecScore},lec_date = #{lecDate}
+        lec_time = #{lecTime},content = #{content} where lec_number  = #{lecNumber}
+    </update>
 </mapper>
