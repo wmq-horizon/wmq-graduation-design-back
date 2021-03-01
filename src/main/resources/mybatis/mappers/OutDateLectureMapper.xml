@@ -12,7 +12,7 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="speaker" jdbcType="VARCHAR" property="speaker" />
     <result column="lec_score" jdbcType="DOUBLE" property="lecScore" />
-    <result column="lec_date" jdbcType="DATE" property="lecDate" />
+    <result column="lec_date" jdbcType="VARCHAR" property="lecDate" />
     <result column="lec_time" jdbcType="VARCHAR" property="lecTime" />
     <result column="introduction" jdbcType="LONGVARCHAR" property="introduction" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -28,7 +28,7 @@
       lec_time, introduction, content
       )
     values (#{lecNumber,jdbcType=VARCHAR}, #{lecRoom,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
-      #{speaker,jdbcType=VARCHAR}, #{lecScore,jdbcType=DOUBLE}, #{lecDate,jdbcType=DATE}, 
+      #{speaker,jdbcType=VARCHAR}, #{lecScore,jdbcType=DOUBLE}, #{lecDate,jdbcType=VARCHAR},
       #{lecTime,jdbcType=VARCHAR}, #{introduction,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>

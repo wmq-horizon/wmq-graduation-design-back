@@ -105,10 +105,15 @@ public class LectureService {
             resultUtil.setSetMessage("待更新的讲座为空");
             resultUtil.setCode(401);
         }else{
-            resultUtil.setSetMessage("更新讲座");
             int status = lectureMapper.updateLecture(lecture);
+            if(status==0){
+                resultUtil.setSetMessage("更新失败");
+                resultUtil.setCode(201);
+            }else{
+                resultUtil.setSetMessage("更新成功");
+                resultUtil.setCode(200);
+            }
             System.out.println(status);
-            resultUtil.setCode(200);
         }
         return resultUtil;
     }

@@ -8,13 +8,13 @@
     <result column="rrow" jdbcType="INTEGER" property="rrow" />
     <result column="collumn" jdbcType="INTEGER" property="collumn" />
     <result column="time" jdbcType="VARCHAR" property="time" />
-    <result column="date" jdbcType="DATE" property="date" />
+    <result column="date" jdbcType="VARCHAR" property="date" />
     <result column="score" jdbcType="DOUBLE" property="score" />
   </resultMap>
   <insert id="insert" parameterType="com.wmq.lecture.entity.BookLecture">
     insert into book_lecture (stu_number, room_number, lec_number, rrow, collumn, time, date,score)
     values (#{stuNumber,jdbcType=VARCHAR}, #{roomNumber,jdbcType=VARCHAR}, #{lecNumber,jdbcType=VARCHAR}, 
-      #{rrow,jdbcType=INTEGER}, #{collumn,jdbcType=INTEGER}, #{time,jdbcType=VARCHAR}, #{date,jdbcType=DATE},
+      #{rrow,jdbcType=INTEGER}, #{collumn,jdbcType=INTEGER}, #{time,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR},
       #{score,jdbcType=DOUBLE})
   </insert>
 

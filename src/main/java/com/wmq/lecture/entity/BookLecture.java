@@ -10,7 +10,7 @@ public class BookLecture {
     private Integer rrow;
     private Integer collumn;
     private String time;
-    private Date date;
+    private String date;
 
     /**
      *
@@ -155,7 +155,7 @@ public class BookLecture {
      *
      * @mbg.generated Tue Jan 12 17:56:06 CST 2021
      */
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -167,7 +167,7 @@ public class BookLecture {
      *
      * @mbg.generated Tue Jan 12 17:56:06 CST 2021
      */
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

@@ -14,7 +14,7 @@ public class Lecture {
     private String title;
     private String speaker;
     private Double lecScore;
-    private Date lecDate;
+    private String lecDate;
     private String lecTime;
     private String introduction;
     private String content;
@@ -87,7 +87,7 @@ public class Lecture {
      *
      * @mbg.generated Tue Jan 12 17:56:06 CST 2021
      */
-    public Date getLecDate() {
+    public String getLecDate() {
         return lecDate;
     }
 
@@ -100,7 +100,7 @@ public class Lecture {
      * @mbg.generated Tue Jan 12 17:56:06 CST 2021
      */
 //    @DateTimeFormat（pattern:yyyy-MM-dd）
-    public void setLecDate(Date lecDate) {
+    public void setLecDate(String lecDate) {
         this.lecDate = lecDate;
     }
 
