@@ -49,5 +49,7 @@
   <select id="getLectureBookers" resultMap="BaseResultMap">
    select stu_number,name as room_number,rrow,collumn,integrity,users.score,arrived from book_lecture,users where stu_number = uid and lec_number = #{lecNumber}
   </select>
-
+  <update id="checkSign" parameterType="java.lang.String">
+        update book_lecture set arrived = 1 where stu_number = #{stuNumber} and lec_number = #{lecNumber}
+    </update>
 </mapper>

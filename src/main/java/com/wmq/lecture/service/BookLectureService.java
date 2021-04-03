@@ -22,4 +22,13 @@ public class BookLectureService {
         resultUtil.setCode(200);
         return resultUtil;
     }
+
+    public ResultUtil checkSign(String stuNumber,String lecNumber){
+        ResultUtil resultUtil = new ResultUtil();
+        resultUtil.setCode(200);
+        resultUtil.setSetMessage("学生签到检查");
+        System.out.println("学生签到检查");
+        resultUtil.setData(bookLectureMapper.checkSign(stuNumber,lecNumber));
+        return resultUtil;
+    }
 }

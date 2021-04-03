@@ -2,6 +2,7 @@ package com.wmq.lecture.mapper;
 
 import com.wmq.lecture.entity.BookLecture;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -27,5 +28,6 @@ public interface BookLectureMapper {
     List topStudent();
     List topSpeaker();
     List<BookLecture> getLectureBookers(String lecNumber);
+    int checkSign(@Param("stuNumber") String stuNumber, @Param("lecNumber") String lecNumber);
 
 }
