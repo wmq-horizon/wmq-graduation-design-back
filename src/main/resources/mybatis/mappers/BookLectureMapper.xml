@@ -10,6 +10,8 @@
     <result column="time" jdbcType="VARCHAR" property="time" />
     <result column="date" jdbcType="VARCHAR" property="date" />
     <result column="score" jdbcType="DOUBLE" property="score" />
+    <result column="arrived" jdbcType="INTEGER" property="arrived" />
+    <result column="integrity" jdbcType="INTEGER" property="integrity" />
   </resultMap>
   <insert id="insert" parameterType="com.wmq.lecture.entity.BookLecture">
     insert into book_lecture (stu_number, room_number, lec_number, rrow, collumn, time, date,score)
@@ -42,6 +44,10 @@
     from book_lecture,lecture where lecture.lec_number=book_lecture.lec_number
     group by book_lecture.lec_number,speaker
     order by totalLecture desc
+  </select>
+
+  <select id="getLectureBookers" resultMap="BaseResultMap">
+   select stu_number,name as room_number,rrow,collumn,integrity,users.score,arrived from book_lecture,users where stu_number = uid and lec_number = #{lecNumber}
   </select>
 
 </mapper>

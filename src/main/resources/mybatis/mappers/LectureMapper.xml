@@ -32,14 +32,21 @@
       #{lecTime,jdbcType=VARCHAR}, #{introduction,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>
+
   <select id="selectAll" resultMap="BaseResultMap">
     select lec_number, lec_room, title, speaker, lec_score, lec_date, lec_time, introduction, 
     content
     from lecture
   </select>
+
+  <select id="getTodayLecture" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from lecture where lec_date = #{lecDate}
+  </select>
+
     <delete id="deleteLecture">
         delete from lecture where lec_number = #{lecNumber};
     </delete>
+
     <update id="updateLecture" parameterType="com.wmq.lecture.entity.Lecture">
         update lecture set lec_number = #{lecNumber},lec_room = #{lecRoom},title = #{title},
         speaker = #{speaker},introduction = #{introduction},lec_score = #{lecScore},lec_date = #{lecDate},

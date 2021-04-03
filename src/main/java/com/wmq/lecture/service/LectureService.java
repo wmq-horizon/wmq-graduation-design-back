@@ -118,4 +118,13 @@ public class LectureService {
         return resultUtil;
     }
 
+    public ResultUtil getTodayLecture(String lecDate){
+        ResultUtil resultUtil = new ResultUtil();
+        resultUtil.setSetMessage("查询今日召开的讲座");
+        System.out.println(lecDate);
+        resultUtil.setData(lectureMapper.getTodayLecture(lecDate));
+        resultUtil.setCode(200);
+        return resultUtil;
+    }
+
 }

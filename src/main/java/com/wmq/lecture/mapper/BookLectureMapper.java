@@ -26,5 +26,6 @@ public interface BookLectureMapper {
     List topLecture();
     List topStudent();
     List topSpeaker();
+    List<BookLecture> getLectureBookers(String lecNumber);
 
 }

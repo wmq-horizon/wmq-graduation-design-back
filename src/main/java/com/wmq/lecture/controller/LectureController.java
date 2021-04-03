@@ -20,6 +20,14 @@ public class LectureController {
 
     @Resource
     LectureService lectureService;
+
+    @GetMapping("admin/getLectureOfToday")
+    public ResultUtil getTodayLecture(@Param("lecDate")String lecDate){
+        System.out.println(lecDate);
+        System.out.println("查询今日的讲座信息");
+        return lectureService.getTodayLecture(lecDate);
+    }
+
     @GetMapping("student/lectureInfo")
     public ResultUtil getInitTableInfo(){
             return lectureService.getInitTableInfo();
