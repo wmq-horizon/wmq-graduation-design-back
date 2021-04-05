@@ -14,5 +14,6 @@ public class BookLecture {
     private Integer arrived;
     private Double score;
     private Integer integrity;
-
+    private String comments;
+    private Integer commented;
 }

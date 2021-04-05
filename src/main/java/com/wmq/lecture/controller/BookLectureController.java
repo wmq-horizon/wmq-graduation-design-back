@@ -28,4 +28,10 @@ public class BookLectureController {
         return bookLectureService.checkSign(stuNumber,lecNumber);
     }
 
+//    根据学生学号返回学生已经参与过的讲座信息
+    @GetMapping("/student/participated")
+    public ResultUtil participated(String stuNumber){
+        System.out.println(stuNumber);
+        return bookLectureService.participated(stuNumber);
+    }
 }

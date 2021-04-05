@@ -1,6 +1,7 @@
 package com.wmq.lecture.mapper;
 
 import com.wmq.lecture.entity.BookLecture;
+import com.wmq.lecture.entity.resulttype.ParticipatedLecture;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -29,5 +30,5 @@ public interface BookLectureMapper {
     List topSpeaker();
     List<BookLecture> getLectureBookers(String lecNumber);
     int checkSign(@Param("stuNumber") String stuNumber, @Param("lecNumber") String lecNumber);
-
+    List<ParticipatedLecture> selectParticipatedLecture(String stuNumber);
 }

@@ -12,6 +12,8 @@
     <result column="score" jdbcType="DOUBLE" property="score" />
     <result column="arrived" jdbcType="INTEGER" property="arrived" />
     <result column="integrity" jdbcType="INTEGER" property="integrity" />
+    <result column="comments" jdbcType="LONGVARCHAR" property="comments" />
+    <result column="commented" jdbcType="INTEGER" property="commented" />
   </resultMap>
   <insert id="insert" parameterType="com.wmq.lecture.entity.BookLecture">
     insert into book_lecture (stu_number, room_number, lec_number, rrow, collumn, time, date,score)
@@ -52,4 +54,9 @@
   <update id="checkSign" parameterType="java.lang.String">
         update book_lecture set arrived = 1 where stu_number = #{stuNumber} and lec_number = #{lecNumber}
     </update>
+
+  <select id="selectParticipatedLecture" resultType="com.wmq.lecture.entity.resulttype.ParticipatedLecture">
+    select time,date,score,commented,comments,lec_room,title,speaker,introduction,content from book_lecture,lecture
+where book_lecture.lec_number = lecture.lec_number and stu_number = #{stuNumber} and arrived = 1;
+  </select>
 </mapper>

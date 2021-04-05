@@ -31,4 +31,13 @@ public class BookLectureService {
         resultUtil.setData(bookLectureMapper.checkSign(stuNumber,lecNumber));
         return resultUtil;
     }
+    public ResultUtil participated(String stuNumber){
+        System.out.println("stuNumber");
+        System.out.println(stuNumber);
+        ResultUtil resultUtil = new ResultUtil();
+        resultUtil.setCode(200);
+        resultUtil.setSetMessage("根据学号返回学生参与过的讲座信息");
+        resultUtil.setData(bookLectureMapper.selectParticipatedLecture(stuNumber));
+        return resultUtil;
+    }
 }
