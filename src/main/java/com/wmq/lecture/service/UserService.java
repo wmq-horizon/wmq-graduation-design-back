@@ -25,6 +25,15 @@ import java.util.List;
 public class UserService {
     @Resource
     UsersMapper usersMapper;
+
+    public ResultUtil registe(Users user){
+        ResultUtil resultUtil = new ResultUtil();
+        resultUtil.setData(usersMapper.insert(user));
+        resultUtil.setSetMessage("注册新用户");
+        resultUtil.setCode(200);
+        return resultUtil;
+    }
+
     public Users getUserByUid(String uid){
         return usersMapper.selectUserByUid(uid);
     }

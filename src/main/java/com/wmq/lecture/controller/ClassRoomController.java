@@ -26,16 +26,6 @@ public class ClassRoomController {
         return classRoomService.postClassRoomInfo(classRoom);
     }
 
-    @PostMapping("student/buySeat")
-    public ResultUtil buySeat(@RequestBody  Lecture lecture){
-        System.out.println(lecture);
-        ResultUtil resultUtil = new ResultUtil();
-        String seatNumber = "seat_"+lecture.getContent();
-        String room_name = "'"+lecture.getLecRoom()+"'";
-        classRoomService.buySeatSercice(seatNumber,room_name);
-        classRoomService.bookLecture(lecture);
-        return resultUtil;
-    }
     @PostMapping("admin/newRoom")
     public ResultUtil newRoom(@RequestBody ClassRoom room){
         return classRoomService.newRoom(room);

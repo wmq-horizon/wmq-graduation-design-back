@@ -16,4 +16,5 @@ public class BookLecture {
     private Integer integrity;
     private String comments;
     private Integer commented;
+    private String title;
 }

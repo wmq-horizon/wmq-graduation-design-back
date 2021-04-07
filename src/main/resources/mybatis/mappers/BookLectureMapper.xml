@@ -14,17 +14,16 @@
     <result column="integrity" jdbcType="INTEGER" property="integrity" />
     <result column="comments" jdbcType="LONGVARCHAR" property="comments" />
     <result column="commented" jdbcType="INTEGER" property="commented" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
   </resultMap>
   <insert id="insert" parameterType="com.wmq.lecture.entity.BookLecture">
-    insert into book_lecture (stu_number, room_number, lec_number, rrow, collumn, time, date,score)
+    insert into book_lecture (stu_number, room_number, lec_number, rrow, collumn, time, date,score,title)
     values (#{stuNumber,jdbcType=VARCHAR}, #{roomNumber,jdbcType=VARCHAR}, #{lecNumber,jdbcType=VARCHAR}, 
       #{rrow,jdbcType=INTEGER}, #{collumn,jdbcType=INTEGER}, #{time,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR},
-      #{score,jdbcType=DOUBLE})
+      #{score,jdbcType=DOUBLE},#{title,jdbcType=VARCHAR})
   </insert>
-
-
   <select id="selectAll" resultMap="BaseResultMap">
-    select stu_number, room_number, lec_number, rrow, collumn, time, date, score
+    select stu_number, room_number, lec_number, rrow, collumn, time, date, score,title
     from book_lecture
   </select>
 
@@ -56,7 +55,12 @@
     </update>
 
   <select id="selectParticipatedLecture" resultType="com.wmq.lecture.entity.resulttype.ParticipatedLecture">
-    select time,date,score,commented,comments,lec_room,title,speaker,introduction,content from book_lecture,lecture
+    select time,date,score,commented,comments,lec_room,lecture.title,speaker,introduction,content from book_lecture,lecture
 where book_lecture.lec_number = lecture.lec_number and stu_number = #{stuNumber} and arrived = 1;
   </select>
+
+  <update id="doComment" parameterType="com.wmq.lecture.entity.BookLecture">
+    update book_lecture set comments = #{comments}, commented = 1 where stu_number = #{stuNumber} and title = #{title}
+  </update>
+
 </mapper>

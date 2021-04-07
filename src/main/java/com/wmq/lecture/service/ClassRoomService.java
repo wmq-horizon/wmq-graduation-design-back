@@ -50,47 +50,14 @@ public class ClassRoomService {
     /**
      * 当购买座位时，更改座位此时的状态，并且填写 预定座位表相关数据
      * */
-    public ResultUtil buySeatSercice(String seatNumber,String room_name){
+    public ResultUtil buySeat(String seatNumber,String roomNamet){
         ResultUtil resultUtil = new ResultUtil();
-        lectureRoomMapper.buySeatMapper(seatNumber,room_name);
+//        预编译的的Sql语句要需要单引号
+        String roomName = "'"+roomNamet+"'";
+        lectureRoomMapper.buySeatMapper(seatNumber,roomName);
         resultUtil.setSetMessage("修改作为状态成功");
         System.out.println("修改状态成功");
         resultUtil.setCode(200);
-        return resultUtil;
-    }
-
-    /**
-     * 登录的用户需要预定座位的时候则填写bookLecture信息表
-     * */
-    public ResultUtil bookLecture(Lecture lecture){
-        ResultUtil resultUtil = new ResultUtil();
-        BookLecture bookLecture = new BookLecture();
-        Subject currentUser = SecurityUtils.getSubject();
-        String uid = (String)currentUser.getPrincipal();
-        System.out.println("用户是："+uid);
-        bookLecture.setStuNumber(uid);
-
-        bookLecture.setRoomNumber(lecture.getLecRoom());
-        System.out.println(lecture.getLecRoom());
-
-        bookLecture.setLecNumber(lecture.getLecNumber());
-        System.out.println(lecture.getLecNumber());
-
-        bookLecture.setRrow(Integer.parseInt(lecture.getSpeaker())+1);
-        System.out.println(Integer.parseInt(lecture.getSpeaker()));
-
-        bookLecture.setCollumn(Integer.parseInt(lecture.getIntroduction())+1);
-        System.out.println(Integer.parseInt(lecture.getIntroduction()));
-
-        bookLecture.setTime(lecture.getLecTime());
-        System.out.println(lecture.getLecTime());
-
-        bookLecture.setDate(lecture.getLecDate());
-        System.out.println(lecture.getLecDate());
-
-        bookLecture.setScore(lecture.getLecScore());
-        System.out.println(lecture.getLecScore());
-        bookLectureMapper.insert(bookLecture);
         return resultUtil;
     }
 

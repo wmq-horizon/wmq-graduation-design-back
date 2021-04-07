@@ -3,15 +3,13 @@ package com.wmq.lecture.controller;
 import com.wmq.lecture.entity.Users;
 import com.wmq.lecture.service.UserService;
 import com.wmq.lecture.utils.ResultUtil;
-import org.apache.catalina.connector.Response;
-import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +23,13 @@ import javax.annotation.Resource;
 public class UserController<UploadExcelFileService> {
     @Resource
     UserService userService;
+
+    @PostMapping("/registe")
+    public ResultUtil registe(@RequestBody @Validated Users user){
+        System.out.println(user.toString());
+        return userService.registe(user);
+    }
+
     @RequestMapping("/user/login")
     public ResultUtil userLogin(@RequestBody Users user){
         Subject currentUser = SecurityUtils.getSubject();

@@ -29,6 +29,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+<!--        参数校验的插件-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
         <!--        shiro的依赖subject、securitymanager、realm-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
