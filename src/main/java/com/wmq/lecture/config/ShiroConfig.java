@@ -51,15 +51,16 @@ public class ShiroConfig {
         ShiroFilterFactoryBean filter = new ShiroFilterFactoryBean();
         filter.setSecurityManager(securityManager());
         //登录失败之后访问页面
-        filter.setLoginUrl("/user/login");
+        filter.setLoginUrl("/unLogin");
         //未授权允许访问
         filter.setUnauthorizedUrl("/unauthorized");
         Map<String,String> chain = new LinkedHashMap<>();
         //配置任何人可以访问的页面
         //登录Url任何人均可访问
-        chain.put("/user/login","anon");
+        chain.put("/login","anon");
+        chain.put("/registe","anon");
         //登出url在认证后可访问
-        chain.put("/user/logOut","authc");
+        chain.put("/logOut","authc");
         chain.put("/student/home","anon");
         chain.put("/student/**","authc");
         chain.put("/admin/**","roles[admin]");

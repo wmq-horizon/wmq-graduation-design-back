@@ -19,33 +19,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author lenovo
+ * @author horizon
  */
 @Service
 public class UserService {
     @Resource
     UsersMapper usersMapper;
-
     public ResultUtil registe(Users user){
         ResultUtil resultUtil = new ResultUtil();
-        resultUtil.setData(usersMapper.insert(user));
-        resultUtil.setSetMessage("注册新用户");
+        int status = usersMapper.insert(user);
+        if(status==0){
+            resultUtil.setSetMessage("注册失败");
+            resultUtil.setCode(201);
+            return resultUtil;
+        }
+        resultUtil.setSetMessage("注册成功");
         resultUtil.setCode(200);
         return resultUtil;
     }
 
     public Users getUserByUid(String uid){
+
         return usersMapper.selectUserByUid(uid);
     }
     public String getRoleByUid(String uid){
         return usersMapper.selectRoleByUid(uid);
     }
-
     public ResultUtil selectAllUsers(){
         ResultUtil resultUtil = new ResultUtil();
+        resultUtil.setData(usersMapper.selectAll());
+        if(resultUtil.getData()==null){
+            resultUtil.setSetMessage("未查询到用户信息");
+            resultUtil.setCode(201);
+            return resultUtil;
+        }
         resultUtil.setSetMessage("查询所有用户的信息");
         resultUtil.setCode(200);
-        resultUtil.setData(usersMapper.selectAll());
         return resultUtil;
     }
     public ResultUtil uploadExcel(String fileName,MultipartFile file) {
@@ -149,13 +158,24 @@ public class UserService {
     public ResultUtil topScoreUser(){
         ResultUtil resultUtil = new ResultUtil();
         resultUtil.setData(usersMapper.topScoreUser());
+        if(resultUtil.getData()==null){
+            resultUtil.setSetMessage("未查询到相关信息");
+            resultUtil.setCode(201);
+            return resultUtil;
+        }
         resultUtil.setSetMessage("获取成绩排名前10的学生");
         resultUtil.setCode(200);
         return resultUtil;
     }
+
     public ResultUtil topIntegrityUser(){
         ResultUtil resultUtil = new ResultUtil();
         resultUtil.setData(usersMapper.topIntegrityUser());
+        if(resultUtil.getData()==null){
+            resultUtil.setSetMessage("未查询到相关信息");
+            resultUtil.setCode(201);
+            return resultUtil;
+        }
         resultUtil.setSetMessage("获取诚信值排名前10的学生");
         resultUtil.setCode(200);
         return resultUtil;

@@ -1,18 +1,17 @@
 package com.wmq.lecture.service;
 
-import com.wmq.lecture.entity.BookLecture;
-import com.wmq.lecture.entity.ClassRoom;
+import com.wmq.lecture.entity.Room;
 import com.wmq.lecture.entity.Lecture;
 import com.wmq.lecture.entity.LectureRoom;
 import com.wmq.lecture.mapper.BookLectureMapper;
-import com.wmq.lecture.mapper.ClassRoomMapper;
+import com.wmq.lecture.mapper.RoomMapper;
 import com.wmq.lecture.mapper.LectureMapper;
 import com.wmq.lecture.mapper.LectureRoomMapper;
 import com.wmq.lecture.utils.ResultUtil;
-import org.apache.poi.ss.usermodel.Row;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author lenovo
@@ -24,15 +23,21 @@ public class LectureService {
     @Resource
     LectureRoomMapper lectureRoomMapper;
     @Resource
-    ClassRoomMapper classRoomMapper;
+    RoomMapper roomMapper;
     @Resource
     BookLectureMapper bookLectureMapper;
 
     public ResultUtil getInitTableInfo(){
         ResultUtil resultUtil = new ResultUtil();
+        List<Lecture> list = lectureMapper.selectAll();
+        if(list==null){
+            resultUtil.setCode(201);
+            resultUtil.setSetMessage("未查询到相关信息");
+            return resultUtil;
+        }
         resultUtil.setSetMessage("返回讲座信息");
         resultUtil.setCode(200);
-        resultUtil.setData(lectureMapper.selectAll());
+        resultUtil.setData(list);
         return resultUtil;
     }
     /**
@@ -41,16 +46,20 @@ public class LectureService {
      */
     public ResultUtil createNewLecture(Lecture lecture){
         ResultUtil resultUtil = new ResultUtil();
-        resultUtil.setSetMessage("创建讲座成功");
-        resultUtil.setCode(200);
-        lectureMapper.insert(lecture);
+        int status = lectureMapper.insert(lecture);
+        if(status==0){
+            resultUtil.setSetMessage("添加失败");
+            resultUtil.setCode(201);
+            return resultUtil;
+        }
+
 
         //根据讲座选定的宣讲室名称查询该宣讲室拥有的行数和列数
-        ClassRoom classRoom = classRoomMapper.selectRoomByRoomName(lecture.getLecRoom());
-        int rrow = classRoom.getRowCount();
-        int collumn = classRoom.getColCount();
+        Room room = roomMapper.selectRoomByRoomName(lecture.getLecRoom());
+        int rrow = room.getRowCount();
+        int collumn = room.getColCount();
 
-        //设置接下来即将在数据库中插入的数据的参数
+        //设置接下来即将在数据库中插入的数据的参数,创建讲座占用的宣讲室
         LectureRoom lectureRoom = new LectureRoom();
         lectureRoom.setLecNumber(lecture.getLecNumber());
         System.out.println(lecture.getLecNumber());
@@ -60,61 +69,78 @@ public class LectureService {
         System.out.println(collumn);
         lectureRoom.setRowCount(rrow);
         System.out.println(rrow);
-        lectureRoomMapper.insert(lectureRoom);
+        int status1 =  lectureRoomMapper.insert(lectureRoom);
+        ResultUtil resultUtil1 = new ResultUtil();
+        if(status1==0){
+            resultUtil1.setSetMessage("讲座对应宣讲室安排失败");
+            resultUtil1.setCode(201);
+            return resultUtil;
+        }
+        resultUtil.setSetMessage("发布讲座成功");
+        resultUtil.setCode(200);
         return resultUtil;
     }
 
     public ResultUtil getTopLectureInfo(){
         ResultUtil resultUtil = new ResultUtil();
-
-        resultUtil.setSetMessage("获取前讲座排名10的数据");
         resultUtil.setData(bookLectureMapper.topLecture());
+        if(resultUtil.getData()==null){
+            resultUtil.setCode(201);
+            resultUtil.setSetMessage("查询失败");
+            return resultUtil;
+        }
+        resultUtil.setSetMessage("成功获取前讲座排名10的数据");
         resultUtil.setCode(200);
         return resultUtil;
     }
 
+
     public ResultUtil getTopStudent(){
         ResultUtil resultUtil = new ResultUtil();
-        resultUtil.setSetMessage("获取预约讲座次数最多的10人");
-        resultUtil.setCode(200);
         resultUtil.setData(bookLectureMapper.topStudent());
+        if(resultUtil.getData()==null){
+            resultUtil.setSetMessage("查询失败");
+            resultUtil.setCode(200);
+            return resultUtil;
+        }
+        resultUtil.setSetMessage("成功获取预约讲座次数最多的10人");
+        resultUtil.setCode(200);
         return resultUtil;
     }
     public ResultUtil getTopSpeaker(){
         ResultUtil resultUtil = new ResultUtil();
+        resultUtil.setData(bookLectureMapper.topSpeaker());
+        if(resultUtil.getData()==null){
+            resultUtil.setSetMessage("未查询到信息");
+            resultUtil.setCode(201);
+            return resultUtil;
+        }
         resultUtil.setCode(200);
         resultUtil.setSetMessage("获取最受欢迎的前10名讲师");
-        resultUtil.setData(bookLectureMapper.topSpeaker());
         return resultUtil;
     }
     public ResultUtil deleteLecture(String lecNumber){
         ResultUtil resultUtil = new ResultUtil();
-        if(lecNumber==null){
-            resultUtil.setSetMessage("待删除的讲座不存在");
-            resultUtil.setCode(401);
-        }else{
-            lectureMapper.deleteLecture(lecNumber);
-            resultUtil.setSetMessage("成功删除讲座");
-            resultUtil.setCode(200);
+        int status = lectureMapper.deleteLecture(lecNumber);
+        if(status==0){
+            resultUtil.setCode(201);
+            resultUtil.setSetMessage("删除失败");
+            return resultUtil;
         }
+        resultUtil.setSetMessage("删除成功");
         return resultUtil;
     }
     public ResultUtil updateLecture(Lecture lecture){
         ResultUtil resultUtil = new ResultUtil();
-        if (lecture==null || lecture.getLecNumber()==null){
-            resultUtil.setSetMessage("待更新的讲座为空");
-            resultUtil.setCode(401);
+        int status = lectureMapper.updateLecture(lecture);
+        if(status==0){
+            resultUtil.setSetMessage("更新失败");
+            resultUtil.setCode(201);
         }else{
-            int status = lectureMapper.updateLecture(lecture);
-            if(status==0){
-                resultUtil.setSetMessage("更新失败");
-                resultUtil.setCode(201);
-            }else{
-                resultUtil.setSetMessage("更新成功");
-                resultUtil.setCode(200);
-            }
-            System.out.println(status);
+            resultUtil.setSetMessage("更新成功");
+            resultUtil.setCode(200);
         }
+        System.out.println(status);
         return resultUtil;
     }
 
@@ -123,6 +149,12 @@ public class LectureService {
         resultUtil.setSetMessage("查询今日召开的讲座");
         System.out.println(lecDate);
         resultUtil.setData(lectureMapper.getTodayLecture(lecDate));
+        if(resultUtil.getData()==null){
+            resultUtil.setSetMessage("没查询到信息");
+            resultUtil.setCode(201);
+            return resultUtil;
+        }
+        resultUtil.setSetMessage("查询成功");
         resultUtil.setCode(200);
         return resultUtil;
     }

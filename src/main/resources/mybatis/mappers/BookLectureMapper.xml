@@ -62,5 +62,7 @@ where book_lecture.lec_number = lecture.lec_number and stu_number = #{stuNumber}
   <update id="doComment" parameterType="com.wmq.lecture.entity.BookLecture">
     update book_lecture set comments = #{comments}, commented = 1 where stu_number = #{stuNumber} and title = #{title}
   </update>
-
+  <select id="getPastLecture" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from book_lecture where `date` &lt; '2020-01-02' &amp; `time` &lt; '10:00-12:00';
+  </select>
 </mapper>

@@ -21,7 +21,6 @@ public class UserRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken)authenticationToken;
 //        2、获取token里面的userName
         String uid = token.getUsername();
-        System.out.println("2017110336");
         System.out.println(uid);
 //        3、根据userName从数据库取出用户名和密码，并根据查询情况抛出一些异常
         Users user = userService.getUserByUid(uid);

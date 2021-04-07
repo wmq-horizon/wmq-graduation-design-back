@@ -2,12 +2,19 @@ package com.wmq.lecture.entity;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * @author horizon
  */
 @Data
 public class LectureRoom {
+    @NotBlank(message = "讲座编号不能为空！")
+    @NotNull(message = "讲座编号不能为NULL！")
     private String lecNumber;
+    @NotBlank(message = "宣讲室名称不能为空！")
+    @NotNull(message = "宣讲室名称不能为NULL！")
     private String roomNumber;
     private Integer rowCount;
     private Integer colCount;

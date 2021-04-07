@@ -19,7 +19,7 @@ public interface LectureMapper {
      */
     List<Lecture> selectAll();
 
-    void deleteLecture(String lecNumber);
+    int deleteLecture(String lecNumber);
     int updateLecture(Lecture lecture);
 
     List<Lecture> getTodayLecture(String lecDate);

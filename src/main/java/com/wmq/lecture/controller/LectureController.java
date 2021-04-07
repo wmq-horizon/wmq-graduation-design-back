@@ -5,9 +5,11 @@ import com.wmq.lecture.service.LectureService;
 import com.wmq.lecture.utils.ResultUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotBlank;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -22,7 +24,7 @@ public class LectureController {
     LectureService lectureService;
 
     @GetMapping("admin/getLectureOfToday")
-    public ResultUtil getTodayLecture(@Param("lecDate")String lecDate){
+    public ResultUtil getTodayLecture(@NotBlank(message="日期不能为空") String lecDate){
         System.out.println(lecDate);
         System.out.println("查询今日的讲座信息");
         return lectureService.getTodayLecture(lecDate);
@@ -33,7 +35,7 @@ public class LectureController {
     }
 
     @PostMapping("admin/createNewLecture")
-    public ResultUtil createNewLecture(@RequestBody Lecture lecture){
+    public ResultUtil createNewLecture(@RequestBody @Validated  Lecture lecture){
         return lectureService.createNewLecture(lecture);
     }
     @RequestMapping("student/getTopLecture")
@@ -49,18 +51,13 @@ public class LectureController {
         return lectureService.getTopSpeaker();
     }
     @RequestMapping("/admin/deleteLecture")
-    public ResultUtil deleteLecture(@Param("lecNumber")String lecNumber){
+    public ResultUtil deleteLecture(@NotBlank(message="讲座编号不能为空") String lecNumber){
         return lectureService.deleteLecture(lecNumber);
     }
     @RequestMapping("admin/updateLecture")
     @ResponseBody
-    public ResultUtil updateLecture(@RequestBody Lecture lecture){
+    public ResultUtil updateLecture(@RequestBody @Validated Lecture lecture){
         System.out.println("前台时间："+lecture.getLecDate());
-//        SimpleDateFormat f = new SimpleDateFormat( "yyyy-MM-dd");
-//        System.out.println("格式化之后的时间："+f.format(lecture.getLecDate()));
-//        lecture.setLecDate(f.format(lecture.getLecDate()));
-//        System.out.println("格式化之后的日期吼吼："+lecture.getLecDate());
-//        System.out.println("更新讲座信息");
         System.out.println(lecture);
         return lectureService.updateLecture(lecture);
     }

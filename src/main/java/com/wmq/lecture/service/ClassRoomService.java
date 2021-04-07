@@ -1,17 +1,14 @@
 package com.wmq.lecture.service;
 
-import com.wmq.lecture.entity.BookLecture;
-import com.wmq.lecture.entity.ClassRoom;
-import com.wmq.lecture.entity.Lecture;
+import com.wmq.lecture.entity.Room;
 import com.wmq.lecture.mapper.BookLectureMapper;
-import com.wmq.lecture.mapper.ClassRoomMapper;
+import com.wmq.lecture.mapper.RoomMapper;
 import com.wmq.lecture.mapper.LectureRoomMapper;
 import com.wmq.lecture.utils.ResultUtil;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author lenovo
@@ -22,7 +19,7 @@ public class ClassRoomService {
     @Resource
     LectureRoomMapper lectureRoomMapper;
    @Resource
-    ClassRoomMapper classRoomMapper;
+   RoomMapper roomMapper;
    @Resource
    BookLectureMapper bookLectureMapper;
 
@@ -31,20 +28,31 @@ public class ClassRoomService {
     * */
     public ResultUtil getClassRoomInfo(){
         ResultUtil resultUtil = new ResultUtil();
+        List<Room> rooms = roomMapper.selectAll();
+        if(rooms==null){
+            resultUtil.setCode(201);
+            resultUtil.setSetMessage("查询宣讲室信息失败");
+            return resultUtil;
+        }
+        resultUtil.setData(rooms);
         resultUtil.setCode(200);
-        resultUtil.setSetMessage("返回座位的信息");
-        resultUtil.setData(classRoomMapper.selectAll());
+        resultUtil.setSetMessage("查询宣讲室信息成功");
         return resultUtil;
     }
 
     /**
      * 向宣讲室表新增一个教室
      * */
-    public ResultUtil postClassRoomInfo(ClassRoom classRoom) {
+    public ResultUtil postClassRoomInfo(Room room) {
         ResultUtil resultUtil = new ResultUtil();
+        int status = roomMapper.insert(room);
+        if(status==0){
+            resultUtil.setCode(201);
+            resultUtil.setSetMessage("添加失败");
+            return resultUtil;
+        }
         resultUtil.setCode(200);
-        resultUtil.setSetMessage("上传座位信息");
-        classRoomMapper.insert(classRoom);
+        resultUtil.setSetMessage("添加座位信息成功");
         return resultUtil;
     }
     /**
@@ -52,31 +60,46 @@ public class ClassRoomService {
      * */
     public ResultUtil buySeat(String seatNumber,String roomNamet){
         ResultUtil resultUtil = new ResultUtil();
-//        预编译的的Sql语句要需要单引号
+        //        预编译的的Sql语句要需要单引号
         String roomName = "'"+roomNamet+"'";
-        lectureRoomMapper.buySeatMapper(seatNumber,roomName);
-        resultUtil.setSetMessage("修改作为状态成功");
+        int status = lectureRoomMapper.buySeatMapper(seatNumber,roomName);
+        if(status==0){
+            resultUtil.setSetMessage("预定座位失败");
+            resultUtil.setCode(201);
+            return resultUtil;
+        }
+        resultUtil.setSetMessage("修改座位状态成功");
         System.out.println("修改状态成功");
         resultUtil.setCode(200);
         return resultUtil;
     }
 
-/**
- *
- *  新增一个宣讲室
- */
-    public ResultUtil newRoom(ClassRoom room){
-        classRoomMapper.insert(room);
-        return null;
+    /**
+     *
+     *  新增一个宣讲室
+     */
+    public ResultUtil newRoom(Room room){
+        ResultUtil resultUtil = new ResultUtil();
+        int status = roomMapper.insert(room);
+        if(status == 0){
+            resultUtil.setCode(201);
+            resultUtil.setSetMessage("新建失败");
+            return resultUtil;
+        }
+        resultUtil.setSetMessage("创建成功");
+        resultUtil.setCode(200);
+        return resultUtil;
     }
-
-//    public ClassRoom selectClassRoomByRoomName(String roomName){
-//        return classRoomMapper.selectRoomByRoomName(roomName);
-//    }
     public ResultUtil getTopRoom(){
         ResultUtil resultUtil = new ResultUtil();
-        resultUtil.setData(lectureRoomMapper.topRoom());
-        resultUtil.setSetMessage("查询使用最多的两个宣讲室");
+        List rooms = lectureRoomMapper.topRoom();
+        if(rooms==null){
+            resultUtil.setSetMessage("没有查询到相关信息");
+            resultUtil.setCode(201);
+            return resultUtil;
+        }
+        resultUtil.setData(rooms);
+        resultUtil.setSetMessage("查询成功");
         resultUtil.setCode(200);
         return resultUtil;
     }

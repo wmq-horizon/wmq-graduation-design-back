@@ -3,10 +3,15 @@ package com.wmq.lecture.entity;
 import lombok.Data;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @EntityScan
 @Data
-public class ClassRoom {
+public class Room {
     private String roomNumber;
+    @NotBlank(message = "宣讲室名称不能为空！")
+    @NotNull(message = "宣讲室名称不能为NULL！")
     private String roomName;
     private Integer rowCount;
     private Integer colCount;

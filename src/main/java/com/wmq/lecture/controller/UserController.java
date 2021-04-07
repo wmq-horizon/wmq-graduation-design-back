@@ -12,9 +12,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.Resource;
-
 /**
  * @author 负责登录注册相关的业务
  */
@@ -30,8 +28,8 @@ public class UserController<UploadExcelFileService> {
         return userService.registe(user);
     }
 
-    @RequestMapping("/user/login")
-    public ResultUtil userLogin(@RequestBody Users user){
+    @RequestMapping("/login")
+    public ResultUtil userLogin(@RequestBody @Validated Users user){
         Subject currentUser = SecurityUtils.getSubject();
         String uid = user.getUid();
         String password = user.getPassword();
@@ -46,12 +44,10 @@ public class UserController<UploadExcelFileService> {
         System.out.println(uid);
         System.out.println("密码为"+password);
         UsernamePasswordToken token = new UsernamePasswordToken(uid,password);
-
         if(!currentUser.isAuthenticated()&&!currentUser.isRemembered()){
             try{
                 currentUser.login(token);
                 resultUtil.setCode(200);
-
                 resultUtil.setData(uid);
                 resultUtil.setSetMessage(role);
                 return resultUtil;
@@ -77,22 +73,34 @@ public class UserController<UploadExcelFileService> {
             return resultUtil;
         }
     }
-    @RequestMapping("/user/logOut")
+    @RequestMapping("/logOut")
     public ResultUtil logOut(){
+        ResultUtil resultUtil = new ResultUtil();
         Subject currentUser = SecurityUtils.getSubject();
-        System.out.println("现在退出的用户是"+currentUser.toString());
         currentUser.logout();
-        return null;
+        resultUtil.setData(currentUser.toString());
+        resultUtil.setSetMessage("退出登录");
+        return resultUtil;
     }
-    @RequestMapping("/user/unauthorized")
+    @RequestMapping("/unauthorized")
     public ResultUtil unAuthorized(){
         ResultUtil resultUtil = new ResultUtil();
         resultUtil.setCode(401);
         resultUtil.setSetMessage("未认证");
         return resultUtil;
     }
+    @RequestMapping("/unLogin")
+    public ResultUtil unLogin(){
+        ResultUtil resultUtil = new ResultUtil();
+        resultUtil.setCode(401);
+        resultUtil.setSetMessage("未登录");
+        return resultUtil;
+    }
+    /**
+     * 查询当前登录用户的基本信息
+     * */
     @RequestMapping("/student/hello")
-    public ResultUtil showWhoIAm(){
+    public ResultUtil showWho(){
         ResultUtil resultUtil = new ResultUtil();
         Subject currentUser = SecurityUtils.getSubject();
         String uid = (String)currentUser.getPrincipal();
@@ -101,16 +109,19 @@ public class UserController<UploadExcelFileService> {
         resultUtil.setData(userService.getUserByUid(uid));
         return resultUtil;
     }
+
+    /**
+     * 查看所有用户信息，只有管理员有权限查看
+     * */
     @RequestMapping("/admin/users")
     public ResultUtil selectUsers(){
         return  userService.selectAllUsers();
     }
-/**
- * 上传文件用的Controller
- *
- */
-
-    @PostMapping("/upload/excelFile")
+    /**
+    * 上传文件用的Controller,只有管理员才拥有这项功能
+    *
+    */
+    @PostMapping("/admin/upload/excelFile")
     @ResponseBody
     public ResultUtil uploadExcel(MultipartFile file) {
         ResultUtil resultUtil = new ResultUtil();
