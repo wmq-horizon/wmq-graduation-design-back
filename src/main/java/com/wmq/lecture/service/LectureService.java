@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @author lenovo
+ * @author horizon
  */
 @Service
 public class LectureService {
@@ -26,6 +26,19 @@ public class LectureService {
     RoomMapper roomMapper;
     @Resource
     BookLectureMapper bookLectureMapper;
+
+    public ResultUtil getLectureByNumber(String lecNumber){
+        ResultUtil resultUtil = new ResultUtil();
+        resultUtil.setData(lectureMapper.getLectureByNumber(lecNumber));
+        if(resultUtil.getData()==null){
+            resultUtil.setSetMessage("未查询到相关信息");
+            resultUtil.setCode(201);
+            return resultUtil;
+        }
+        resultUtil.setSetMessage("查询成功");
+        resultUtil.setCode(200);
+        return resultUtil;
+    };
 
     public ResultUtil getInitTableInfo(){
         ResultUtil resultUtil = new ResultUtil();

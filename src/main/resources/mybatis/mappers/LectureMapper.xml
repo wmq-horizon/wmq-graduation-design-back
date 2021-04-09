@@ -52,4 +52,7 @@
         speaker = #{speaker},introduction = #{introduction},lec_score = #{lecScore},lec_date = #{lecDate},
         lec_time = #{lecTime},content = #{content} where lec_number  = #{lecNumber}
     </update>
+  <select id="getLectureByNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from lecture where lec_number = #{lecNumber}
+  </select>
 </mapper>

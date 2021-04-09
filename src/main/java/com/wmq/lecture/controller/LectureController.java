@@ -23,6 +23,10 @@ public class LectureController {
     @Resource
     LectureService lectureService;
 
+    @GetMapping("student/getLectureByNumber")
+    public ResultUtil getLectureByNumber(@NotBlank(message="查询条件不能为空") String lecNumber){
+        return lectureService.getLectureByNumber(lecNumber);
+    }
     @GetMapping("admin/getLectureOfToday")
     public ResultUtil getTodayLecture(@NotBlank(message="日期不能为空") String lecDate){
         System.out.println(lecDate);

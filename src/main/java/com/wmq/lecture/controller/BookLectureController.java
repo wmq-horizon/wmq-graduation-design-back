@@ -7,13 +7,11 @@ import com.wmq.lecture.service.BookLectureService;
 import com.wmq.lecture.service.ClassRoomService;
 import com.wmq.lecture.utils.QRCodeUtil;
 import com.wmq.lecture.utils.ResultUtil;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -79,12 +77,21 @@ public class BookLectureController {
 
     @PostMapping("student/buySeat")
     public ResultUtil buySeat(@RequestBody @Validated  BookLecture bookLecture){
+        ResultUtil resultUtil = new ResultUtil();
         System.out.println(bookLecture.toString());
         String seatNumber = "seat_"+bookLecture.getCommented();
         String roomName = bookLecture.getRoomNumber();
         bookLecture.setCommented(0);
-        classRoomService.buySeat(seatNumber,roomName);
-        return bookLectureService.bookLecture(bookLecture);
+        ResultUtil result1 = bookLectureService.bookLecture(bookLecture);
+        ResultUtil result2 = classRoomService.buySeat(seatNumber,roomName);
+        if(result1.getCode()==200&&result2.getCode()==200){
+            result1.setCode(200);
+            result1.setSetMessage("预约成功");
+            return result1;
+        }
+        result1.setSetMessage("预约失败");
+        result1.setCode(201);
+        return result1;
     }
 
     /**

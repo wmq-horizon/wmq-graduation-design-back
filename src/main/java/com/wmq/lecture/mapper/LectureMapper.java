@@ -14,13 +14,17 @@ public interface LectureMapper {
      * @mbg.generated Tue Jan 12 17:56:06 CST 2021
      */
     int insert(Lecture record);
+
     /**
      * @mbg.generated Tue Jan 12 17:56:06 CST 2021
      */
     List<Lecture> selectAll();
 
     int deleteLecture(String lecNumber);
+
     int updateLecture(Lecture lecture);
 
     List<Lecture> getTodayLecture(String lecDate);
+
+    Lecture getLectureByNumber(String lecNumber);
 }
