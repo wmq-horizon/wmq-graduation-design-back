@@ -31,7 +31,7 @@ public class BookLectureController {
     public ResultUtil getAll(){
         return bookLectureService.getAll();
     }
-    @GetMapping("/student/pastLecture")
+    @GetMapping("/pastLecture")
     public ResultUtil getPastLecture(@NotBlank(message = "日期不能为空") String date, @NotBlank(message="时间不能为空") String time){
         return bookLectureService.getPastLecture(date,time);
     }
