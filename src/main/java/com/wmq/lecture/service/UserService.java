@@ -11,7 +11,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
@@ -177,6 +176,30 @@ public class UserService {
             return resultUtil;
         }
         resultUtil.setSetMessage("获取诚信值排名前10的学生");
+        resultUtil.setCode(200);
+        return resultUtil;
+    }
+    public ResultUtil deleteUserByUid(String uid){
+        ResultUtil resultUtil = new ResultUtil();
+        int status = usersMapper.deleteByPrimaryKey(uid);
+        if(status ==0){
+            resultUtil.setSetMessage("删除失败");
+            resultUtil.setCode(201);
+            return resultUtil;
+        }
+        resultUtil.setSetMessage("删除成功");
+        resultUtil.setData(200);
+        return resultUtil;
+    }
+    public ResultUtil updateUserInfo(Users user){
+        ResultUtil resultUtil = new ResultUtil();
+        int status = usersMapper.updateUserInfo(user);
+        if (status == 0) {
+            resultUtil.setSetMessage("修改失败");
+            resultUtil.setCode(201);
+            return resultUtil;
+        }
+        resultUtil.setSetMessage("修改成功");
         resultUtil.setCode(200);
         return resultUtil;
     }

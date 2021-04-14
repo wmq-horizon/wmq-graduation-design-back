@@ -9,4 +9,6 @@ public interface RoomMapper {
     int insert(Room record);
     List<Room> selectAll();
     Room selectRoomByRoomName(String roomName);
+    int updateRoom(Room room);
+    int deleteRoomByNumber(String roomNumber);
 }

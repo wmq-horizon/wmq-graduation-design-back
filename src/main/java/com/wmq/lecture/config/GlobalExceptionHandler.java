@@ -71,7 +71,7 @@ public class GlobalExceptionHandler {
         ResultUtil resultUtil = new ResultUtil();
         resultUtil.setCode(404);
         System.out.println(exception.getMessage());
-        resultUtil.setSetMessage("唯一编号不允许重复插入");
+        resultUtil.setSetMessage("失败");
         return resultUtil;
     }
 
@@ -80,7 +80,7 @@ public class GlobalExceptionHandler {
         ResultUtil resultUtil = new ResultUtil();
         resultUtil.setCode(404);
         System.out.println(exception.getMessage());
-        resultUtil.setSetMessage("唯一编号不允许重复插入");
+        resultUtil.setSetMessage("重复插入");
         return resultUtil;
     }
 

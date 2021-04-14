@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotBlank;
 
 /**
  * @author lenovo
@@ -32,5 +33,13 @@ public class RoomController {
     @GetMapping("/student/topRoom")
     public ResultUtil topRoom(){
         return classRoomService.getTopRoom();
+    }
+    @PostMapping("/admin/updateLectureRoom")
+    public ResultUtil updateRoom(@RequestBody @Validated Room room){
+        return classRoomService.updateRoom(room);
+    }
+    @GetMapping("/admin/deleteRoom")
+    public ResultUtil deleteRoom(@NotBlank(message="删除条件为空") String roomNumber ){
+        return classRoomService.deleteRoomByNumber(roomNumber);
     }
 }

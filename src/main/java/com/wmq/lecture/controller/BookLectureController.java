@@ -45,7 +45,7 @@ public class BookLectureController {
      * 管理员查看指定讲座有哪些学生报名订座
      * */
     @RequestMapping("/admin/lectureBookers")
-    public ResultUtil getLectureBookers(@NotBlank(message = "lecNUmber不能为空") String lecNumber){
+    public ResultUtil getLectureBookers(@NotBlank(message = "查询条件不能为空") String lecNumber){
         return bookLectureService.getLectureBookers(lecNumber);
     }
 
@@ -77,8 +77,6 @@ public class BookLectureController {
 
     @PostMapping("student/buySeat")
     public ResultUtil buySeat(@RequestBody @Validated  BookLecture bookLecture){
-        ResultUtil resultUtil = new ResultUtil();
-        System.out.println(bookLecture.toString());
         String seatNumber = "seat_"+bookLecture.getCommented();
         String roomName = bookLecture.getRoomNumber();
         bookLecture.setCommented(0);
@@ -98,7 +96,7 @@ public class BookLectureController {
      *只有管理员才能打开讲座待签到的二维码
      * @param lecName
      * */
-    @GetMapping(value = "/admin/qrCode")
+    @GetMapping(value = "/qrCode")
     public void getCode(@NotBlank(message = "讲座标题不能为空") String lecName ,@NotBlank(message="讲座编号不能为空") String lecNumber, HttpServletResponse response) throws IOException {
         // 设置响应流信息
         response.setContentType("image/jpg");
@@ -110,7 +108,8 @@ public class BookLectureController {
         System.out.println(lecName);
         System.out.println(lecNumber);
 //        扫描二维码的界面在未登录情况下可以进入
-        String content = " http://127.0.0.1:8080/signUp?lecName="+lecName+"?lecNumber="+lecNumber;
+        String content = " http://127.0.0.1:8080/signUp?lecName="+lecName+"&lecNumber="+lecNumber;
+        System.out.println(content);
         //根据url获取一个二维码图片
         BitMatrix bitMatrix = QRCodeUtil.createCode(content);
         //以流的形式输出到前端

@@ -17,4 +17,5 @@ public interface UsersMapper {
     int insertExcelData(List<Users> item);
     List topScoreUser();
     List topIntegrityUser();
+    int updateUserInfo(Users user);
 }

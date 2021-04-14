@@ -1,5 +1,6 @@
 package com.wmq.lecture.controller;
 
+import com.wmq.lecture.entity.Lecture;
 import com.wmq.lecture.entity.Users;
 import com.wmq.lecture.service.UserService;
 import com.wmq.lecture.utils.ResultUtil;
@@ -13,6 +14,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
+import javax.validation.constraints.NotBlank;
+
 /**
  * @author 负责登录注册相关的业务
  */
@@ -174,5 +177,12 @@ public class UserController<UploadExcelFileService> {
     public ResultUtil getTopIntegrityStudent(){
         return userService.topIntegrityUser();
     }
-
+    @RequestMapping("/admin/deleteUser/")
+    public ResultUtil deleteByUid(@NotBlank(message="条件为空") String uid){
+        return userService.deleteUserByUid(uid);
+    }
+    @PostMapping("/admin/updateUserInfo")
+    public ResultUtil updateUserInfo(@RequestBody @Validated Users user){
+        return userService.updateUserInfo(user);
+    }
 }

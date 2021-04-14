@@ -103,4 +103,28 @@ public class ClassRoomService {
         resultUtil.setCode(200);
         return resultUtil;
     }
+    public ResultUtil updateRoom(Room room){
+        ResultUtil resultUtil = new ResultUtil();
+        int status = roomMapper.updateRoom(room);
+        if(status==0){
+            resultUtil.setSetMessage("修改失败");
+            resultUtil.setCode(201);
+            return resultUtil;
+        }
+        resultUtil.setSetMessage("修改成功");
+        resultUtil.setCode(200);
+        return resultUtil;
+    }
+    public ResultUtil deleteRoomByNumber(String roomNumber){
+        ResultUtil resultUtil = new ResultUtil();
+        int status = roomMapper.deleteRoomByNumber(roomNumber);
+        if(status==0){
+            resultUtil.setSetMessage("删除失败");
+            resultUtil.setCode(201);
+            return resultUtil;
+        };
+        resultUtil.setSetMessage("删除成功");
+        resultUtil.setCode(200);
+        return resultUtil;
+    }
 }

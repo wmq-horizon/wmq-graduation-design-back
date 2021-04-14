@@ -49,4 +49,10 @@
   <insert id="insert" parameterType="com.wmq.lecture.entity.Users">
     insert into users(uid,name,password,integrity,role,score,status) values(#{uid},#{name},#{password},60,'admin',0,0);
   </insert>
+  <delete id="deleteByPrimaryKey">
+    delete from users where uid = #{uid};
+  </delete>
+  <update id="updateUserInfo" parameterType="com.wmq.lecture.entity.Users">
+    update users set `name` = #{name},integrity = #{integrity},role = #{role},score = #{score},status = #{status}
+  </update>
 </mapper>
