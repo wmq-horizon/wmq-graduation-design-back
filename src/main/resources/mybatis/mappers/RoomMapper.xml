@@ -259,7 +259,7 @@
   </select>
 
   <update id="updateRoom" parameterType="com.wmq.lecture.entity.Room">
-    update lecture set room_name = #{roomName},row_count=#{rowCount},col_count=#{colCount}} where room_number = #{roomNumber}
+    update room set room_name = #{roomName},row_count=#{rowCount},col_count=#{colCount} where room_number = #{seat1}
   </update>
 
   <delete id="deleteRoomByNumber" parameterType="java.lang.String">

@@ -79,15 +79,15 @@ public class BookLectureController {
     public ResultUtil buySeat(@RequestBody @Validated  BookLecture bookLecture){
         String seatNumber = "seat_"+bookLecture.getCommented();
         String roomName = bookLecture.getRoomNumber();
+        String lecNumber = bookLecture.getLecNumber();
         bookLecture.setCommented(0);
         ResultUtil result1 = bookLectureService.bookLecture(bookLecture);
-        ResultUtil result2 = classRoomService.buySeat(seatNumber,roomName);
+        ResultUtil result2 = classRoomService.buySeat(seatNumber,roomName,lecNumber);
         if(result1.getCode()==200&&result2.getCode()==200){
             result1.setCode(200);
             result1.setSetMessage("预约成功");
             return result1;
         }
-        result1.setSetMessage("预约失败");
         result1.setCode(201);
         return result1;
     }

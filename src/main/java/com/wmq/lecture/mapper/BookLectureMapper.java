@@ -5,6 +5,7 @@ import com.wmq.lecture.entity.resulttype.ParticipatedLecture;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public interface BookLectureMapper {
      * param record
      * return  int
      **/
-    int insert(BookLecture record);
+    int insert(BookLecture record) throws SQLIntegrityConstraintViolationException;
     /**
      * return  List<BookLecture>
      **/

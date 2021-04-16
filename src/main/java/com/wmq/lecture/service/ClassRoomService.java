@@ -58,11 +58,11 @@ public class ClassRoomService {
     /**
      * 当购买座位时，更改座位此时的状态，并且填写 预定座位表相关数据
      * */
-    public ResultUtil buySeat(String seatNumber,String roomNamet){
+    public ResultUtil buySeat(String seatNumber,String roomNamet,String lecNumber){
         ResultUtil resultUtil = new ResultUtil();
         //        预编译的的Sql语句要需要单引号
         String roomName = "'"+roomNamet+"'";
-        int status = lectureRoomMapper.buySeatMapper(seatNumber,roomName);
+        int status = lectureRoomMapper.buySeatMapper(seatNumber,roomNamet,lecNumber);
         if(status==0){
             resultUtil.setSetMessage("预定座位失败");
             resultUtil.setCode(201);

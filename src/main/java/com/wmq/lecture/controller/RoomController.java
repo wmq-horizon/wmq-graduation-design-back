@@ -36,6 +36,7 @@ public class RoomController {
     }
     @PostMapping("/admin/updateLectureRoom")
     public ResultUtil updateRoom(@RequestBody @Validated Room room){
+        System.out.println("标题为："+room.getSeat1());
         return classRoomService.updateRoom(room);
     }
     @GetMapping("/admin/deleteRoom")

@@ -203,6 +203,18 @@ public class UserService {
         resultUtil.setCode(200);
         return resultUtil;
     }
+    public ResultUtil changePassword(String oldPassword,String newPassword,String uid){
+        ResultUtil resultUtil = new ResultUtil();
+        int status = usersMapper.changePassword(oldPassword,newPassword,uid);
+        if(status==0){
+            resultUtil.setCode(201);
+            resultUtil.setSetMessage("修改失败");
+            return resultUtil;
+        }
+        resultUtil.setCode(200);
+        resultUtil.setSetMessage("修改成功");
+        return resultUtil;
+    }
 }
 
 

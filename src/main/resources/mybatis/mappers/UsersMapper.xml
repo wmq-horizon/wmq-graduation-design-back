@@ -53,6 +53,9 @@
     delete from users where uid = #{uid};
   </delete>
   <update id="updateUserInfo" parameterType="com.wmq.lecture.entity.Users">
-    update users set `name` = #{name},integrity = #{integrity},role = #{role},score = #{score},status = #{status}
+    update users set `name` = #{name},integrity = #{integrity},score = #{score},status = #{status} where uid = #{uid}
+  </update>
+  <update id="changePassword" parameterType="java.lang.String">
+    update users set password = #{newPassword} where uid = #{uid} and password=#{oldPassword}
   </update>
 </mapper>

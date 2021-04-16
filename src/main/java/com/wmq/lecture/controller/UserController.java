@@ -185,4 +185,10 @@ public class UserController<UploadExcelFileService> {
     public ResultUtil updateUserInfo(@RequestBody @Validated Users user){
         return userService.updateUserInfo(user);
     }
+    @RequestMapping("/changePassword")
+    public ResultUtil changePassword(@RequestParam("oldPassword")String oldPassword,@RequestParam("newPassword")String newPassword){
+        Subject currentUser = SecurityUtils.getSubject();
+        String uid = currentUser.getPrincipal().toString();
+        return userService.changePassword(oldPassword,newPassword,uid);
+    }
 }

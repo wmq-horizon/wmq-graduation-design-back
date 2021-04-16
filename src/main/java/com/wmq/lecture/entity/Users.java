@@ -16,8 +16,6 @@ public class Users {
     @Length(max = 10,min=10,message="账号长度为10")
     private String uid;
     private String name;
-    @NotBlank(message = "密码不能为空！")
-    @NotNull(message = "密码不能为NULL！")
     private String password;
     private Integer integrity;
     private String role;

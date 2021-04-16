@@ -9,6 +9,7 @@ import com.wmq.lecture.utils.ResultUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 /**
@@ -87,7 +88,15 @@ public class BookLectureService {
      * */
     public ResultUtil bookLecture(BookLecture bookLecture){
         ResultUtil resultUtil = new ResultUtil();
-        int status =  bookLectureMapper.insert(bookLecture);
+        int status = 0;
+        try {
+            status = bookLectureMapper.insert(bookLecture);
+        } catch (SQLIntegrityConstraintViolationException e) {
+            e.printStackTrace();
+            resultUtil.setCode(201);
+            resultUtil.setSetMessage("您已经订座成功，请勿重复操作");
+            return resultUtil;
+        }
         if(status==0){
            resultUtil.setCode(201);
            resultUtil.setSetMessage("预约失败");

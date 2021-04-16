@@ -285,7 +285,7 @@
   </select>
 
   <update id="buySeatMapper" statementType="STATEMENT">
-    update lecture_room set ${seatNumber} = '2' where room_number = ${roomName}
+    update lecture_room set ${seatNumber} = '2' where room_number = ${roomName} and lec_number = ${lecNumber}
   </update>
 
   <select id="topRoom" resultType="com.wmq.lecture.entity.resulttype.TopRoom" >

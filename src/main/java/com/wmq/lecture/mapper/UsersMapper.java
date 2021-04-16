@@ -2,6 +2,7 @@ package com.wmq.lecture.mapper;
 
 import com.wmq.lecture.entity.Users;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +19,5 @@ public interface UsersMapper {
     List topScoreUser();
     List topIntegrityUser();
     int updateUserInfo(Users user);
+    int changePassword(@Param("oldPassword") String oldPassword,@Param("newPassword") String newPassword, @Param("uid") String uid);
 }

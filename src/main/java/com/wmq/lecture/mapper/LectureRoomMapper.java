@@ -14,6 +14,6 @@ public interface LectureRoomMapper {
     List<Room> getSeatInfo(@Param("roomName")String roomName, @Param("lecNumber") String lecNumber);
 
     List<LectureRoom> selectAll();
-    int buySeatMapper(@Param("seatNumber")String seatNumber, @Param("roomName") String roomName);
+    int buySeatMapper(@Param("seatNumber")String seatNumber, @Param("roomName") String roomName,@Param("lecNumber")String lecNumber);
     List topRoom();
 }
