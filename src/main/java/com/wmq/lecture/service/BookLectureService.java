@@ -43,9 +43,9 @@ public class BookLectureService {
         resultUtil.setData(result);
         return resultUtil;
     }
-    public ResultUtil checkSign(String stuNumber,String lecNumber){
+    public ResultUtil checkSign(String stuNumber,String lecNumber,String score){
         ResultUtil resultUtil = new ResultUtil();
-        int status = bookLectureMapper.checkSign(stuNumber,lecNumber);
+        int status = bookLectureMapper.checkSign(stuNumber,lecNumber,score);
         if(status==0){
             resultUtil.setCode(201);
             resultUtil.setSetMessage("签到失败");

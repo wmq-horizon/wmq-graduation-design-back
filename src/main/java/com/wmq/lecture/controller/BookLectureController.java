@@ -50,13 +50,14 @@ public class BookLectureController {
     }
 
     /**
-     * 学生才有签到的权限
+     * 学生才有签到的权限,签到更新预约讲座表
      * */
-    @GetMapping("/student/sign")
-    public ResultUtil studentSign(@NotBlank(message = "学号不能为空") String stuNumber,@NotBlank(message = "讲座编号不能为空") String lecNumber){
+    @GetMapping("/sign")
+    public ResultUtil studentSign(@NotBlank(message = "学号不能为空") String stuNumber,@NotBlank(message = "讲座编号不能为空") String lecNumber,String score){
         System.out.println(stuNumber);
         System.out.println(lecNumber);
-        return bookLectureService.checkSign(stuNumber,lecNumber);
+        System.out.println(score);
+        return bookLectureService.checkSign(stuNumber,lecNumber,score);
     }
     /**
      * 根据学生学号返回学生已经参与过的讲座信息
@@ -115,5 +116,4 @@ public class BookLectureController {
         //以流的形式输出到前端
         MatrixToImageWriter.writeToStream(bitMatrix , "jpg" , stream);
     }
-
 }

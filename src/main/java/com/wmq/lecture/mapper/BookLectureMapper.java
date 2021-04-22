@@ -34,7 +34,7 @@ public interface BookLectureMapper {
     /**
      * desc:根据学号和讲座编号在bookLecture表中检查学生，用update方法
      * */
-    int checkSign(@Param("stuNumber") String stuNumber, @Param("lecNumber") String lecNumber);
+    int checkSign(@Param("stuNumber") String stuNumber, @Param("lecNumber") String lecNumber,@Param("score") String score);
 
     List<ParticipatedLecture> selectParticipatedLecture(String stuNumber);
 

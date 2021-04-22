@@ -52,6 +52,7 @@
   </select>
   <update id="checkSign" parameterType="java.lang.String">
         update book_lecture set arrived = 1 where stu_number = #{stuNumber} and lec_number = #{lecNumber}
+        update users set score =score + #{score},integrity = integrity + 1 where uid = #{stuNumber}
     </update>
 
   <select id="selectParticipatedLecture" resultType="com.wmq.lecture.entity.resulttype.ParticipatedLecture">
