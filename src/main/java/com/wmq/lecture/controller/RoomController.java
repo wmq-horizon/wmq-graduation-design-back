@@ -43,4 +43,8 @@ public class RoomController {
     public ResultUtil deleteRoom(@NotBlank(message="删除条件为空") String roomNumber ){
         return classRoomService.deleteRoomByNumber(roomNumber);
     }
+    @GetMapping("admin/getRoom")
+    public ResultUtil getRoom(){
+        return classRoomService.getRoomName();
+    }
 }

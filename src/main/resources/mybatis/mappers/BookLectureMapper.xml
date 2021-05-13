@@ -15,12 +15,13 @@
     <result column="comments" jdbcType="LONGVARCHAR" property="comments" />
     <result column="commented" jdbcType="INTEGER" property="commented" />
     <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="speaker" jdbcType="VARCHAR" property="speaker" />
   </resultMap>
   <insert id="insert" parameterType="com.wmq.lecture.entity.BookLecture">
-    insert into book_lecture (stu_number, room_number, lec_number, rrow, collumn, time, date,score,title)
+    insert into book_lecture (stu_number, room_number, lec_number, rrow, collumn, time, date,score,title,speaker)
     values (#{stuNumber,jdbcType=VARCHAR}, #{roomNumber,jdbcType=VARCHAR}, #{lecNumber,jdbcType=VARCHAR}, 
       #{rrow,jdbcType=INTEGER}, #{collumn,jdbcType=INTEGER}, #{time,jdbcType=VARCHAR}, #{date,jdbcType=VARCHAR},
-      #{score,jdbcType=DOUBLE},#{title,jdbcType=VARCHAR})
+      #{score,jdbcType=DOUBLE},#{title,jdbcType=VARCHAR},#{speaker,jdbcType=VARCHAR})
   </insert>
   <select id="selectAll" resultMap="BaseResultMap">
     select stu_number, room_number, lec_number, rrow, collumn, time, date, score,title
@@ -41,29 +42,35 @@
   </select>
 
   <select id="topSpeaker" resultType="com.wmq.lecture.entity.resulttype.TopSpeaker">
-    select speaker,book_lecture.lec_number , count(book_lecture.lec_number) totalLecture
-    from book_lecture,lecture where lecture.lec_number=book_lecture.lec_number
-    group by book_lecture.lec_number,speaker
-    order by totalLecture desc
+    select speaker,count(*)total from book_lecture group by speaker order by total desc limit 3
   </select>
 
   <select id="getLectureBookers" resultMap="BaseResultMap">
    select stu_number,name as room_number,rrow,collumn,integrity,users.score,arrived from book_lecture,users where stu_number = uid and lec_number = #{lecNumber}
   </select>
-  <update id="checkSign" parameterType="java.lang.String">
-        update book_lecture set arrived = 1 where stu_number = #{stuNumber} and lec_number = #{lecNumber}
-        update users set score =score + #{score},integrity = integrity + 1 where uid = #{stuNumber}
-    </update>
+  <update id="checkSign1" parameterType="java.lang.String">
+     update book_lecture set arrived = 1 where stu_number = ${stuNumber} and lec_number = ${lecNumber};
+  </update>
+
+  <update id="checkSign">
+        update users set score =score + #{score},integrity = integrity + 1 where uid = #{stuNumber};
+   </update>
 
   <select id="selectParticipatedLecture" resultType="com.wmq.lecture.entity.resulttype.ParticipatedLecture">
-    select time,date,score,commented,comments,lec_room,lecture.title,speaker,introduction,content from book_lecture,lecture
-where book_lecture.lec_number = lecture.lec_number and stu_number = #{stuNumber} and arrived = 1;
+    select time,date,score,commented,comments,lec_room,lecture.title,lecture.speaker,introduction,content from book_lecture,lecture
+where book_lecture.lec_number = lecture.lec_number and stu_number = #{stuNumber} ;
   </select>
 
   <update id="doComment" parameterType="com.wmq.lecture.entity.BookLecture">
     update book_lecture set comments = #{comments}, commented = 1 where stu_number = #{stuNumber} and title = #{title}
   </update>
+
   <select id="getPastLecture" parameterType="java.lang.String" resultMap="BaseResultMap">
     select * from book_lecture where `date` &lt; '2020-01-02' &amp; `time` &lt; '10:00-12:00' and commented = 1;
   </select>
+  <update id="reduceIntegrity" parameterType="java.lang.String">
+    update users,book_lecture set integrity = integrity - 1,arrived = 2 where lec_number = #{lecNumber} and arrived = 0 and uid = stu_number;
+  </update>
+
+
 </mapper>

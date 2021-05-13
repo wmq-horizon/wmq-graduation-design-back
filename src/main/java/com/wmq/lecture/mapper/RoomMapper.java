@@ -11,4 +11,5 @@ public interface RoomMapper {
     Room selectRoomByRoomName(String roomName);
     int updateRoom(Room room);
     int deleteRoomByNumber(String roomNumber);
+    List<Room> getRoomNames();
 }

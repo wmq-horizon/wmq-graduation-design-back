@@ -187,8 +187,9 @@ public class UserService {
             resultUtil.setCode(201);
             return resultUtil;
         }
+        System.out.println("删除讲座！");
         resultUtil.setSetMessage("删除成功");
-        resultUtil.setData(200);
+        resultUtil.setCode(200);
         return resultUtil;
     }
     public ResultUtil updateUserInfo(Users user){

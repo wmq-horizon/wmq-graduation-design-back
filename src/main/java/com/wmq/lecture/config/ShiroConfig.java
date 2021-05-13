@@ -60,7 +60,7 @@ public class ShiroConfig {
         chain.put("/login","anon");
         chain.put("/registe","anon");
         //登出url在认证后可访问
-        chain.put("/logOut","authc");
+        chain.put("/logOut","anon");
         chain.put("/student/home","anon");
         chain.put("/student/**","authc");
         chain.put("/admin/**","roles[admin]");

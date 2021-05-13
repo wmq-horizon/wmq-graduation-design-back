@@ -4,8 +4,8 @@
 <generatorConfiguration>
 
     <context id="simple" targetRuntime="MyBatis3Simple">
-        <jdbcConnection connectionURL="jdbc:mysql://127.0.0.1:3306/lecture?serverTimezone=GMT%2B8&amp;useSSL=false"
-                        driverClass="com.mysql.cj.jdbc.Driver" password="root" userId="root" />
+        <jdbcConnection connectionURL="jdbc:mysql://47.108.211.133:3306/lecture?serverTimezone=GMT%2B8&amp;useSSL=false"
+                        driverClass="com.mysql.cj.jdbc.Driver" password="Mm232326." userId="root" />
 <!--        实体类生成的地方-->
         <javaModelGenerator targetPackage="com.wmq.lecture.entity" targetProject="src/main/java"/>
 <!--mapper.xml存储的地方-->

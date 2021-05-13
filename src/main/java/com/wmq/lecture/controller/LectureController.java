@@ -27,11 +27,9 @@ public class LectureController {
     public ResultUtil getLectureByNumber(@NotBlank(message="查询条件不能为空") String lecNumber){
         return lectureService.getLectureByNumber(lecNumber);
     }
-    @GetMapping("admin/getLectureOfToday")
-    public ResultUtil getTodayLecture(@NotBlank(message="日期不能为空") String lecDate){
-        System.out.println(lecDate);
-        System.out.println("查询今日的讲座信息");
-        return lectureService.getTodayLecture(lecDate);
+    @GetMapping("admin/signedInfo")
+    public ResultUtil getTodayLecture(){
+        return lectureService.getTodayLecture();
     }
     @GetMapping("student/lectureInfo")
     public ResultUtil getInitTableInfo(){
@@ -46,10 +44,12 @@ public class LectureController {
     public ResultUtil getTopLecture(){
          return lectureService.getTopLectureInfo();
     };
+
     @RequestMapping("student/getTopStudent")
     public ResultUtil getTopStudent(){
         return lectureService.getTopStudent();
     }
+
     @RequestMapping("student/getTopThreeSpeaker")
     public ResultUtil getTopSpeaker(){
         return lectureService.getTopSpeaker();

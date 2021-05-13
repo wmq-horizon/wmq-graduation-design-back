@@ -58,4 +58,5 @@
   <update id="changePassword" parameterType="java.lang.String">
     update users set password = #{newPassword} where uid = #{uid} and password=#{oldPassword}
   </update>
+
 </mapper>

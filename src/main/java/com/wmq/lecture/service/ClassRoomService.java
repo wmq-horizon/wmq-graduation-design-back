@@ -115,6 +115,7 @@ public class ClassRoomService {
         resultUtil.setCode(200);
         return resultUtil;
     }
+
     public ResultUtil deleteRoomByNumber(String roomNumber){
         ResultUtil resultUtil = new ResultUtil();
         int status = roomMapper.deleteRoomByNumber(roomNumber);
@@ -125,6 +126,18 @@ public class ClassRoomService {
         };
         resultUtil.setSetMessage("删除成功");
         resultUtil.setCode(200);
+        return resultUtil;
+    }
+    public ResultUtil getRoomName(){
+        ResultUtil resultUtil = new ResultUtil();
+        resultUtil.setData(roomMapper.getRoomNames());
+        if(resultUtil.getData()!=null){
+            resultUtil.setSetMessage("查询成功");
+            resultUtil.setCode(200);
+            return resultUtil;
+        }
+        resultUtil.setSetMessage("查询失败！");
+        resultUtil.setCode(201);
         return resultUtil;
     }
 }

@@ -1,9 +1,11 @@
 package com.wmq.lecture.config;
 
 import com.wmq.lecture.utils.ResultUtil;
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -91,6 +93,14 @@ public class GlobalExceptionHandler {
         resultUtil.setCode(404);
         System.out.println(exception.getMessage());
         resultUtil.setSetMessage("请求异常");
+        return resultUtil;
+    }
+    @ExceptionHandler({MyBatisSystemException.class})
+    public ResultUtil cannotGetJdbcConnectionException(MyBatisSystemException exception){
+        ResultUtil resultUtil = new ResultUtil();
+        resultUtil.setCode(404);
+        System.out.println(exception.getMessage());
+        resultUtil.setSetMessage("数据库连接失败！");
         return resultUtil;
     }
 }

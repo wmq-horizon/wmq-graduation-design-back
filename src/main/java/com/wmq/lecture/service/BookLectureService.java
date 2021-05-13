@@ -43,16 +43,27 @@ public class BookLectureService {
         resultUtil.setData(result);
         return resultUtil;
     }
-    public ResultUtil checkSign(String stuNumber,String lecNumber,String score){
+    public ResultUtil checkSign(String stuNumber,String lecNumber,double score){
         ResultUtil resultUtil = new ResultUtil();
-        int status = bookLectureMapper.checkSign(stuNumber,lecNumber,score);
-        if(status==0){
-            resultUtil.setCode(201);
-            resultUtil.setSetMessage("签到失败");
+        System.out.println("stuNumber"+stuNumber);
+        System.out.println("lecNumber"+lecNumber);
+        int status1 = bookLectureMapper.checkSign1(stuNumber,lecNumber);
+        System.out.println("status");
+        System.out.println(status1+"status1");
+        if(status1==1){
+            int status = bookLectureMapper.checkSign(stuNumber,score);
+            if(status!=0){
+                resultUtil.setCode(200);
+                resultUtil.setSetMessage("签到成功");
+                return resultUtil;
+            }
+        }else if(status1==0){
+            resultUtil.setCode(200);
+            resultUtil.setSetMessage("只能签到一次");
             return resultUtil;
         }
-        resultUtil.setCode(200);
-        resultUtil.setSetMessage("学生签成功");
+        resultUtil.setCode(201);
+        resultUtil.setSetMessage("签到失败");
         return resultUtil;
     }
 
@@ -139,6 +150,22 @@ public class BookLectureService {
             resultUtil.setCode(201);
             resultUtil.setSetMessage("查询信息失败");
             return  resultUtil;
+        }
+    }
+
+    public ResultUtil reduceIntegrity(String lecNumber){
+        System.out.println("待扣除的讲座的编号是："+lecNumber);
+        System.out.println(lecNumber);
+        ResultUtil resultUtil = new ResultUtil();
+        int status = bookLectureMapper.reduceIntegrity(lecNumber);
+        if(status!=0){
+            resultUtil.setCode(200);
+            resultUtil.setSetMessage("扣除诚信值成功！");
+            return resultUtil;
+        }else{
+            resultUtil.setCode(201);
+            resultUtil.setSetMessage("扣除诚信值失败");
+            return resultUtil;
         }
     }
 }

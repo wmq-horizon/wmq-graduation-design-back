@@ -7,6 +7,7 @@ import com.wmq.lecture.service.BookLectureService;
 import com.wmq.lecture.service.ClassRoomService;
 import com.wmq.lecture.utils.QRCodeUtil;
 import com.wmq.lecture.utils.ResultUtil;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,16 +50,7 @@ public class BookLectureController {
         return bookLectureService.getLectureBookers(lecNumber);
     }
 
-    /**
-     * 学生才有签到的权限,签到更新预约讲座表
-     * */
-    @GetMapping("/sign")
-    public ResultUtil studentSign(@NotBlank(message = "学号不能为空") String stuNumber,@NotBlank(message = "讲座编号不能为空") String lecNumber,String score){
-        System.out.println(stuNumber);
-        System.out.println(lecNumber);
-        System.out.println(score);
-        return bookLectureService.checkSign(stuNumber,lecNumber,score);
-    }
+
     /**
      * 根据学生学号返回学生已经参与过的讲座信息
      * */
@@ -94,26 +86,41 @@ public class BookLectureController {
     }
 
     /**
+     * 学生才有签到的权限,签到更新预约讲座表
+     * */
+    @GetMapping("/sign")
+    public ResultUtil studentSign(@NotBlank(message = "学号不能为空") String stuNumber,@NotBlank(message = "讲座编号不能为空") String lecNumber,String score){
+        System.out.println(stuNumber);
+        System.out.println(lecNumber);
+        System.out.println(score);
+        double scores = Double.parseDouble(score);
+        return bookLectureService.checkSign(stuNumber,lecNumber,scores);
+    }
+    /**
      *只有管理员才能打开讲座待签到的二维码
-     * @param lecName
+     * @param score
      * */
     @GetMapping(value = "/qrCode")
-    public void getCode(@NotBlank(message = "讲座标题不能为空") String lecName ,@NotBlank(message="讲座编号不能为空") String lecNumber, HttpServletResponse response) throws IOException {
+    public void getCode(@NotBlank(message = "讲座标题不能为空") String lecNumber,String score,HttpServletResponse response) throws IOException {
         // 设置响应流信息
         response.setContentType("image/jpg");
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
         OutputStream stream = response.getOutputStream();
-        System.out.println("查看传到后端的讲座编号");
-        System.out.println(lecName);
         System.out.println(lecNumber);
-//        扫描二维码的界面在未登录情况下可以进入
-        String content = " http://127.0.0.1:8080/signUp?lecName="+lecName+"&lecNumber="+lecNumber;
-        System.out.println(content);
+//        扫描二维码的界面在未登录情况下可以进入,访问前端的页面
+       String content = " http://47.108.211.133:8080/signPage?lecNumber="+lecNumber +"&score="+score;
+        System.out.println("扫描二维码访问的页面为："+content);
         //根据url获取一个二维码图片
         BitMatrix bitMatrix = QRCodeUtil.createCode(content);
         //以流的形式输出到前端
         MatrixToImageWriter.writeToStream(bitMatrix , "jpg" , stream);
+    }
+
+    @GetMapping("admin/reduceIntegrity")
+    public ResultUtil reduceIntegrity(@NotBlank(message = "讲座编号不能为空") String lecNumber){
+        System.out.println(lecNumber+"lecNumber");
+        return bookLectureService.reduceIntegrity(lecNumber);
     }
 }

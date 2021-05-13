@@ -140,6 +140,8 @@ public class LectureService {
             resultUtil.setSetMessage("删除失败");
             return resultUtil;
         }
+        System.out.println("删除讲座！");
+        resultUtil.setCode(200);
         resultUtil.setSetMessage("删除成功");
         return resultUtil;
     }
@@ -157,11 +159,10 @@ public class LectureService {
         return resultUtil;
     }
 
-    public ResultUtil getTodayLecture(String lecDate){
+    public ResultUtil getTodayLecture(){
         ResultUtil resultUtil = new ResultUtil();
         resultUtil.setSetMessage("查询今日召开的讲座");
-        System.out.println(lecDate);
-        resultUtil.setData(lectureMapper.getTodayLecture(lecDate));
+        resultUtil.setData(lectureMapper.getTodayLecture());
         if(resultUtil.getData()==null){
             resultUtil.setSetMessage("没查询到信息");
             resultUtil.setCode(201);

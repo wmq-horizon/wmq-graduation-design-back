@@ -29,4 +29,5 @@ public class BookLecture {
     private String comments;
     private Integer commented;
     private String title;
+    private String speaker;
 }

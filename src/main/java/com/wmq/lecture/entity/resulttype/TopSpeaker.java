@@ -10,6 +10,5 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 @EntityScan
 public class TopSpeaker {
     private String speaker;
-    private String lecNumber;
-    private Integer totalLecture;
+    private Integer total;
 }

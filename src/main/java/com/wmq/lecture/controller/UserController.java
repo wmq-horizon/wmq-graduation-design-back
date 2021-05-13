@@ -39,19 +39,20 @@ public class UserController<UploadExcelFileService> {
         String role = userService.getRoleByUid(uid);
         System.out.println("role:"+role);
         ResultUtil resultUtil = new ResultUtil();
-        if(role==null||!role.equals(user.getRole())){
-            resultUtil.setCode(243);
-            resultUtil.setSetMessage("角色不匹配");
-            return resultUtil;
-        }
         System.out.println(uid);
         System.out.println("密码为"+password);
         UsernamePasswordToken token = new UsernamePasswordToken(uid,password);
         if(!currentUser.isAuthenticated()&&!currentUser.isRemembered()){
             try{
                 currentUser.login(token);
+                if(role==null||!role.equals(user.getRole())){
+                    resultUtil.setCode(243);
+                    resultUtil.setSetMessage("角色不匹配");
+                    return resultUtil;
+                }
                 resultUtil.setCode(200);
                 resultUtil.setData(uid);
+                System.out.println("登录成功！");
                 resultUtil.setSetMessage(role);
                 return resultUtil;
             }catch (UnknownAccountException ue){
@@ -73,18 +74,23 @@ public class UserController<UploadExcelFileService> {
         }else{
             resultUtil.setSetMessage("已经登录");
             resultUtil.setCode(200);
+            resultUtil.setData(uid);
+            System.out.println("已经登录！");
             return resultUtil;
         }
     }
     @RequestMapping("/logOut")
     public ResultUtil logOut(){
+        System.out.println("退出登录");
         ResultUtil resultUtil = new ResultUtil();
         Subject currentUser = SecurityUtils.getSubject();
+        System.out.println(currentUser.getPrincipal());
         currentUser.logout();
         resultUtil.setData(currentUser.toString());
         resultUtil.setSetMessage("退出登录");
         return resultUtil;
     }
+
     @RequestMapping("/unauthorized")
     public ResultUtil unAuthorized(){
         ResultUtil resultUtil = new ResultUtil();
@@ -124,7 +130,7 @@ public class UserController<UploadExcelFileService> {
     * 上传文件用的Controller,只有管理员才拥有这项功能
     *
     */
-    @PostMapping("/admin/upload/excelFile")
+    @PostMapping("/upload/excelFile")
     @ResponseBody
     public ResultUtil uploadExcel(MultipartFile file) {
         ResultUtil resultUtil = new ResultUtil();
@@ -144,7 +150,6 @@ public class UserController<UploadExcelFileService> {
                 resultUtil.setSetMessage("文件格式不对");
                 return resultUtil;
             }
-
             long size = file.getSize();
             if (size == 0) {
                 // 文件不能为空
@@ -152,9 +157,7 @@ public class UserController<UploadExcelFileService> {
                resultUtil.setSetMessage("文件不能为空");
                return resultUtil;
             }
-
             resultUtil = userService.uploadExcel(fileName, file);
-
             if (resultUtil.getSetMessage().equals("success")) {
                 //保存成功
                 resultUtil.setCode(200);
@@ -165,7 +168,6 @@ public class UserController<UploadExcelFileService> {
             resultUtil.setCode(313);
             resultUtil.setSetMessage("上传文件失败");
         }
-
         return resultUtil;
     }
 

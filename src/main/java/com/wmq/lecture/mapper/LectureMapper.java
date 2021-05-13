@@ -24,7 +24,7 @@ public interface LectureMapper {
 
     int updateLecture(Lecture lecture);
 
-    List<Lecture> getTodayLecture(String lecDate);
+    List<Lecture> getTodayLecture();
 
     Lecture getLectureByNumber(String lecNumber);
 }

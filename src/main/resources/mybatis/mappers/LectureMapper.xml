@@ -34,13 +34,13 @@
   </insert>
 
   <select id="selectAll" resultMap="BaseResultMap">
-    select lec_number, lec_room, title, speaker, lec_score, lec_date, lec_time, introduction, 
+    select lec_number, lec_room, title, speaker, lec_score, lec_date, lec_time, introduction,
     content
-    from lecture
+    from lecture order by lec_date desc
   </select>
 
-  <select id="getTodayLecture" resultMap="BaseResultMap" parameterType="java.lang.String">
-    select * from lecture where lec_date = #{lecDate}
+  <select id="getTodayLecture" resultMap="BaseResultMap">
+    select * from lecture order by lec_date desc
   </select>
 
     <delete id="deleteLecture">

@@ -265,4 +265,7 @@
   <delete id="deleteRoomByNumber" parameterType="java.lang.String">
     delete from room where room_number = #{roomNumber}
   </delete>
+  <select id="getRoomNames" resultMap="BaseResultMap">
+      select room_number,room_name from room ;
+  </select>
 </mapper>
